@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+a:link, a:visited{
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: grey;
+    background-color: transparent;
+    text-decoration: muted;
+}
+
+<!--a:active {-->
+<!--    color: white;-->
+<!--    background-color: transparent;-->
+<!--    text-decoration: none;-->
+<!--}-->
+</style>
+{% endblock %}
+
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<div class="album py-5">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {%for i in games%}
+            <div class="col">
+                <div style="background-color:Black" class="card">
+                    <img src="{{ url_for('static', filename=i.image) }}" width="100%" height="600" alt="image">
+                    <div class="card-body bg-dark">
+                        <h3>${{ i.price }}
+                            <button type="button" class="btn btn-lg btn-success">
+                                Buy
+                            </button>
+                        </h3>
+                        <p class="card-subtitle mb-2">
+                             {% for j in i.genre %}
+                                {{ j }}
+                             {% endfor %}
+                        </p>
+                        <h5 class="card-title"><a href="/game_detail">{{ i.name }}</a></h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
