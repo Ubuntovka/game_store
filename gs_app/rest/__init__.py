@@ -12,3 +12,7 @@ def init_api():
         game_api.GameListApi,
         '/api/games'
     )
+    api.add_resource(
+        game_api.GameApi,
+        '/api/game/<uuid>'
+    )
