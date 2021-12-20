@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Game details
+{% endblock %}
+
+{% block body %}
+
+<div class="p-5 mb-4 bg-dark rounded-3">
+    <div class="container py-3 border-bottom">
+        <div class="mb-4">
+            <img src="{{ url_for('static', filename=game.image) }}" width="450" height="600" alt="image">
+        </div>
+        <p class="display-5 fw-bold">{{ game.name }}</p>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+            <p class="fw-light fs-1">${{ game.price }}</p>
+            <button type="button" class="btn btn-lg btn-success fs-2">Buy</button>
+        </div>
+
+    </div>
+    <div class="container-lg py-3">
+        {%for i in game.genre%}
+        <nobr class="text-info">{{ i }}</nobr>
+        {% endfor %}
+        <p class="col-md-8 fs-4">{{ game.description }}</p>
+    </div>
+</div>
+
+
+{% endblock %}

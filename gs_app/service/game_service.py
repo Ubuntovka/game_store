@@ -12,7 +12,7 @@ class GameService:
         """
         :return: list of all games
         """
-        games = Game.objects()
+        games = Game.objects
         return games
 
     @staticmethod
