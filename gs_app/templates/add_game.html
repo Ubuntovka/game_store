@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Game
+{% endblock %}
+
+{% block body %}
+
+<form method="POST" class="needs-validation" enctype="multipart/form-data">
+    <div class="container">
+        <div class="g-3">
+            <div class="col-sm-6">
+                <label for="name" class="form-label text-info">Name</label>
+                <input required type="text" class="form-control mb-3" id="name" placeholder="name" name="name">
+            </div>
+
+            <div class="col-sm-1">
+                <label for="price" class="form-label text-info">Price ($) <span class="text-muted">(Optional)</span></label>
+                <input type="number" class="form-control mb-3" id="price" placeholder="price" name="price">
+            </div>
+
+            <p class="text-info">Genres <span class="text-muted">(Optional)</span></p>
+            <form>
+                <input type="checkbox" id="genre" name="genre" value="Strategy">
+                <label for="genre">Strategy</label><br>
+
+                <input type="checkbox" id="genre1" name="genre" value="Strategy(Rally)">
+                <label for="genre">Strategy(Rally)</label><br>
+
+                <input type="checkbox" id="genre2" name="genre" value="Strategy(Arcade)">
+                <label for="genre">Strategy(Arcade)</label><br>
+
+                <input type="checkbox" id="genre3" name="genre" value="Strategy(Off-road)">
+                <label for="genre">Strategy(Off-road)</label><br>
+
+                <input type="checkbox" id="genre4" name="genre" value="RPG">
+                <label for="genre">RPG</label><br>
+
+                <input type="checkbox" id="genre5" name="genre" value="Sports">
+                <label for="genre">Sports</label><br>
+
+                <input type="checkbox" id="genre6" name="genre" value="Races">
+                <label for="genre">Races</label><br>
+
+                <input type="checkbox" id="genre7" name="genre" value="Action">
+                <label for="genre">Action</label><br>
+
+                <input type="checkbox" id="genre8" name="genre" value="Action(FPS)">
+                <label for="genre">Action(FPS)</label><br>
+
+                <input type="checkbox" id="genre9" name="genre" value="Action(TPS)">
+                <label for="genre">Action(TPS)</label><br>
+
+                <input type="checkbox" id="genre10" name="genre" value="Action(Misc.)">
+                <label for="genre">Action(Misc.)</label><br>
+
+                <input type="checkbox" id="genre11" name="genre" value="Adventure">
+                <label for="genre">Adventure</label><br>
+
+                <input type="checkbox" id="genre12" name="genre" value="Puzzle & Skill">
+                <label for="genre">Puzzle & Skill</label><br>
+
+                <input class="mb-3" type="checkbox" id="genre13" name="genre" value="Other">
+                <label for="genre">Other</label><br>
+            </form>
+
+            <div class="col-12 mb-3">
+                <label for="image" class="form-label text-info">Image<span class="text-muted">(Optional)</span></label>
+                <p><input type="file" id='image' name="file">
+                </p>
+            </div>
+
+            <p class="text-info">Hide <span class="text-muted">(Optional)</span></p>
+            <input class="mb-3" type="checkbox" id="hide" name="hide" value=True>
+            <label for="hide">Hide</label><br>
+
+            <div class="mb-3">
+                <label for="description" class="form-label text-info">Description</label>
+                <input required type="text" class="form-control mb-3" id="description" placeholder="description"
+                       name="description">
+            </div>
+
+
+        </div>
+
+        <input class="btn btn-success btn-md" type="submit" value="Submit">
+    </div>
+</form>
+
+<p>{{ body }}</p>
+
+
+{% endblock %}

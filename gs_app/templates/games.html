@@ -13,6 +13,9 @@ a:hover {
     background-color: transparent;
     text-decoration: muted;
 }
+
+
+
 </style>
 {% endblock %}
 
@@ -24,7 +27,7 @@ Home
 {% block body %}
 <div class="album py-5">
     <div class="container">
-
+        <a href="/game/add" role="button" class="btn btn-lg btn-success mb-4">Add game</a>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {%for i in games%}
             <div class="col">
@@ -32,16 +35,17 @@ Home
                     <img src="{{ url_for('static', filename=i.image) }}" width="100%" height="600" alt="image">
                     <div class="card-body bg-dark">
                         <h3>${{ i.price }}
-                            <button type="button" class="btn btn-lg btn-success">
+                            <a type="button" class="btn btn-lg btn-success">
                                 Buy
-                            </button>
+                            </a>
                         </h3>
                         <p class="card-subtitle mb-2">
-                             {% for j in i.genre %}
-                                {{ j }}
-                             {% endfor %}
+                            {% for j in i.genre %}
+                            {{ j }}
+                            {% endfor %}
                         </p>
-                        <h5 class="card-title"><a href="{{ url_for('game_details', game_uuid=i.uuid) }}">{{ i.name }}</a></h5>
+                        <h5 class="card-title"><a href="{{ url_for('game_details', game_uuid=i.uuid) }}">{{ i.name
+                            }}</a></h5>
                     </div>
                 </div>
             </div>

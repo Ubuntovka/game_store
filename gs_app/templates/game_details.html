@@ -8,9 +8,7 @@ Game details
 
 <div class="p-5 mb-4 bg-dark rounded-3">
     <div class="container py-3 border-bottom">
-        <div class="mb-4">
-            <img src="{{ url_for('static', filename=game.image) }}" width="450" height="600" alt="image">
-        </div>
+        <img class="mb-4" src="{{ url_for('static', filename=game.image) }}" width="450" height="600" alt="image">
         <p class="display-5 fw-bold">{{ game.name }}</p>
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             <p class="fw-light fs-1">${{ game.price }}</p>

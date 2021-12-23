@@ -6,7 +6,7 @@ class Game(db.Document):
     uuid = db.StringField(default=lambda: str(u.uuid4()), unique=True)
     name = db.StringField()
     price = db.FloatField()
-    genre = db.ListField()
+    genre = db.ListField(db.StringField())
     image = db.StringField()
     hide = db.BooleanField()
     description = db.StringField()

@@ -5,7 +5,7 @@ def populate_database():
     Game(
         name='The Witcher 3',
         price=25,
-        genre=['RPG', 'Action', 'Adventure'],
+        genre=['RPG', 'Action', 'Adventure', 'Other'],
         image='games_logo/the_witcher_3.jpg',
         hide=False,
         description='As war rages on throughout the Northern Realms, you take on the greatest contract of your'
@@ -15,7 +15,7 @@ def populate_database():
     Game(
         name='Cyberpunk 2077',
         price=20,
-        genre=['RPG', 'Action(FPS)', 'Adventure'],
+        genre=['RPG', 'Action(FPS)', 'Adventure', 'Other'],
         image='games_logo/cyberpunk.jpg',
         hide=False,
         description='Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis'
