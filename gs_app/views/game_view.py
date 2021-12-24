@@ -27,10 +27,22 @@ class GameView(FlaskView):
 
         return render_template('games.html', games=games)
 
-    @route('/game/<game_uuid>', endpoint='game_details')
+    @route('/game/<game_uuid>', endpoint='game_details', methods=['POST', 'GET'])
     def game_details(self, game_uuid):
         game = GameService.get_games_by_uuid(game_uuid)
-        return render_template('game_details.html', game=game)
+
+        is_image = False
+        if game.image == '':
+            is_image = True
+
+        file = request.files.get('file')
+        if file and self.allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join('D:/epam_tasks/game_store/gs_app/static/games_logo', filename))
+            image_path = 'games_logo/' + filename
+            game.update(image=image_path)
+
+        return render_template('game_details.html', game=game, is_image=is_image)
 
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):

@@ -7,8 +7,26 @@ Game details
 {% block body %}
 
 <div class="p-5 mb-4 bg-dark rounded-3">
+
+
+    {% if not is_image %}
+    <div class="container py-3">
+        <form method="POST" class="needs-validation" enctype="multipart/form-data">
+            <div class="col-12 mb-3">
+                <label for="image" class="form-label text-info">Image<span class="text-muted">(Optional)</span></label>
+                <nobr><input type="file" id='image' name="file">
+                </nobr>
+            </div>
+            <input class="btn btn-success btn-md" type="submit" value="Submit">
+        </form>
+    </div>
+    {% endif %}
+
+
     <div class="container py-3 border-bottom">
+        {% if is_image %}
         <img class="mb-4" src="{{ url_for('static', filename=game.image) }}" width="450" height="600" alt="image">
+        {% endif %}
         <p class="display-5 fw-bold">{{ game.name }}</p>
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             <p class="fw-light fs-1">${{ game.price }}</p>

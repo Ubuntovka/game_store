@@ -30,3 +30,8 @@ class GameService:
         games = Game.objects(genre__in=genres)
         return games
 
+    @staticmethod
+    def delete_game_by_uuid(uuid):
+        Game.objects(uuid=uuid).delete()
+        return '', 204
+

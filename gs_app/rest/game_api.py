@@ -30,3 +30,7 @@ class GameApi(GameApiBase):
     def get(self, uuid):
         game = self.service.get_games_by_uuid(uuid)
         return game.to_dict(), 200
+
+    def delete(self, uuid):
+        game = self.service.delete_game_by_uuid(uuid)
+        return game

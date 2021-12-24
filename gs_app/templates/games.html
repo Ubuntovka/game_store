@@ -13,25 +13,6 @@ a:hover {
     background-color: transparent;
     text-decoration: muted;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 {% endblock %}
 
@@ -106,7 +87,10 @@ Home
             {%for i in games%}
             <div class="col">
                 <div style="background-color:Black" class="card">
+
+                    {% if i.image != None %}
                     <img src="{{ url_for('static', filename=i.image) }}" width="100%" height="600" alt="image">
+                    {% endif %}
                     <div class="card-body bg-dark">
                         <h3>${{ i.price }}
                             <a type="button" class="btn btn-lg btn-success">
