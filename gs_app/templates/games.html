@@ -28,6 +28,10 @@ a:hover {
 
 
 
+
+
+
+
 </style>
 {% endblock %}
 
@@ -41,11 +45,13 @@ Home
     <div class="container">
         <a href="/game/add" role="button" class="btn btn-lg btn-success mb-4">Add game</a>
 
-        <div class="nav col-md-3 text-end mb-4">
+        <div class="nav col-md-3 mb-4">
             <form method="get" class="nav col-12 col-md-auto mb-2 mb-md-0 me-lg-3">
-                <input type="search" class="form-control form-control-dark" placeholder="Search" name="search">
+                <nobr>
+                    <input type="search" class="form-control form-control-dark" placeholder="Search" name="search">
+                </nobr>
+                <input class="btn btn-outline-success" type="submit" value="Submit">
             </form>
-            <button class="btn btn-outline-success" type="submit">Submit</button>
         </div>
 
         <p class="text-info">Choose genres:<span class="text-muted">(Optional)</span></p>
