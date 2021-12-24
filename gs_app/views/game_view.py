@@ -3,8 +3,6 @@ from flask import render_template, request, redirect, url_for
 from flask_classy import FlaskView, route
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
-import json
-from flask_mongoengine.wtf import model_form
 from gs_app.models.games import Game
 
 
@@ -15,9 +13,18 @@ class GameView(FlaskView):
     def allowed_file(cls, filename):
         return '.' in filename and filename.rsplit('.', 1)[1] in {'png', 'jpg'}
 
-    @route('/games', endpoint='games')
+    @route('/games', endpoint='games', methods=['GET', 'POST'])
     def home(self):
         games = GameService.get_games()
+
+        search = request.args.get('search')
+        if search:
+            games = GameService.get_games_by_name(search)
+
+        list_of_genres = request.form.getlist('genre')
+        if list_of_genres:
+            games = GameService.get_games_by_genres(list_of_genres)
+
         return render_template('games.html', games=games)
 
     @route('/game/<game_uuid>', endpoint='game_details')
