@@ -7,10 +7,26 @@ class GameService:
         Department service used to make database queries
     """
 
-    @classmethod
-    def get_games(cls):
+    @staticmethod
+    def get_games():
         """
         :return: list of all games
         """
         games = Game.objects
         return games
+
+    @staticmethod
+    def get_games_by_uuid(uuid):
+        game = Game.objects(uuid=uuid).first()
+        return game
+
+    @staticmethod
+    def get_games_by_name(name):
+        games = Game.objects(name__icontains=name)
+        return games
+
+    @staticmethod
+    def get_games_by_genres(genres: list):
+        games = Game.objects(genre__in=genres)
+        return games
+
