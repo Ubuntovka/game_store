@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Game
+{% endblock %}
+
+{% block body %}
+
+<form method="POST" class="needs-validation" enctype="multipart/form-data">
+    <div class="container">
+        <div class="g-3">
+            <div class="col-sm-6">
+                <label for="name" class="form-label text-info">Name</label>
+                <input required type="text" class="form-control mb-3" id="name" placeholder="name" name="name"
+                       value="{{ game.name }}">
+            </div>
+
+            <div class="col-sm-1">
+                <label for="price" class="form-label text-info">Price ($) <span
+                        class="text-muted">(Optional)</span></label>
+                <input type="number" class="form-control mb-3" id="price" placeholder="price" name="price"
+                       value="{{ game.price }}">
+            </div>
+
+            <p class="text-info">Genres <span class="text-muted">(Optional)</span></p>
+
+            <form>
+                {% for i in all_genres %}
+                {% if i in game.genre %}
+                <div><input type="checkbox" checked="checked" name="genre" value="{{ i }}">{{ i }}</div>
+                {% else %}
+                <input type="checkbox" id="genre" name="genre" value="{{ i }}">
+                <label for="genre">{{ i }}</label><br>
+                {% endif %}
+                {% endfor %}
+                <div class="mb-3"></div>
+            </form>
+
+
+            <div class="col-12 mb-3">
+                <label for="image" class="form-label text-info">Image<span class="text-muted">(Optional)</span></label>
+                <p><input type="file" id='image' name="file"></p>
+                <p>
+                    Now:
+                    {% if game.image != None %}
+                    <img class="mb-4" src="{{ url_for('static', filename=game.image) }}" width="450" height="600"
+                         alt="image">
+                    {% else %}
+                    Image not found
+                    {% endif %}
+                </p>
+            </div>
+
+            <p class="text-info">Hide <span class="text-muted">(Optional)</span></p>
+            {% if game.hide %}
+            <div><input class="mb-3" type="checkbox" checked="checked" name="hide" value=True>Hide</div>
+            {% else %}
+            <div><input class="mb-3" type="checkbox" name="hide" value=True>Hide</div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="description" class="form-label text-info">Description</label>
+                <textarea required class="form-control mb-3" id="description" placeholder="description"
+                          name="description">{{ game.description }}</textarea>
+            </div>
+        </div>
+        <input class="btn btn-success btn-md mb-4" type="submit" value="Submit">
+    </div>
+</form>
+
+
+{% endblock %}
