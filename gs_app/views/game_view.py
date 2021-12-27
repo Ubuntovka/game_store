@@ -1,5 +1,5 @@
 import os
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
@@ -31,12 +31,21 @@ class GameView(FlaskView):
     def game_details(self, game_uuid):
         game = GameService.get_games_by_uuid(game_uuid)
 
-        file = request.files.get('file')
-        if file and self.allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join('D:/epam_tasks/game_store/gs_app/static/games_logo', filename))
-            image_path = 'games_logo/' + filename
-            game.update(image=image_path)
+        if request.method == "POST":
+
+            if request.form.get('hide_game') == 'True':
+                game.update(hide=True)
+            elif request.form.get('hide_game') == 'False':
+                game.update(hide=False)
+
+            file = request.files.get('file')
+            if file and self.allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join('D:/epam_tasks/game_store/gs_app/static/games_logo', filename))
+                image_path = 'games_logo/' + filename
+                game.update(image=image_path)
+
+            return redirect('/game/' + game_uuid)
 
         return render_template('game_details.html', game=game, game_uuid=game_uuid)
 

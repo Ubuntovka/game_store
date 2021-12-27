@@ -12,7 +12,7 @@ class GameService:
         """
         :return: list of all games
         """
-        games = Game.objects
+        games = Game.objects(hide=False)
         return games
 
     @staticmethod
@@ -22,16 +22,24 @@ class GameService:
 
     @staticmethod
     def get_games_by_name(name):
-        games = Game.objects(name__icontains=name)
+        games = Game.objects(name__icontains=name, hide=False)
         return games
 
     @staticmethod
     def get_games_by_genres(genres: list):
-        games = Game.objects(genre__in=genres)
+        games = Game.objects(genre__in=genres, hide=False)
         return games
 
     @staticmethod
     def delete_game_by_uuid(uuid):
         Game.objects(uuid=uuid).delete()
         return '', 204
+
+    @staticmethod
+    def hide_game_by_uuid(uuid):
+        game = Game.objects(uuid=uuid).first()
+        if game is None:
+            raise ValueError('Invalid game uuid')
+        game.update(hide=True)
+        return game
 

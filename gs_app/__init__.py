@@ -3,6 +3,7 @@ from flask_mongoengine import MongoEngine
 from flask_restful import Api
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'game_store',
