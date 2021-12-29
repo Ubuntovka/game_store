@@ -1,3 +1,12 @@
+"""
+This package contains modules defining game REST APIs and
+functions to initialize respective API endpoints:
+Modules:
+- `game_api.py`: defines model representing games
+Functions:
+- `init_api`: register REST API endpoints
+"""
+
 from gs_app import api
 
 from . import game_api

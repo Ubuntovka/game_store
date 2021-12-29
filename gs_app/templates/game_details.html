@@ -7,8 +7,36 @@ Game details
 {% block body %}
 
 <div class="p-5 mb-4 bg-dark rounded-3">
+
+    <a href="{{ url_for('edit_game', game_uuid=game_uuid) }}" role="button" class="btn btn-lg btn-info mb-4">Edit
+        game</a>
+
+    <form method="post">
+        {% if game.hide %}
+        <p class="text-warning">Unhide game:</p>
+        <input class="btn btn-lg btn-warning mb-4" type="submit" value="False" name="hide_game"/>
+        {% else %}
+        <p class="text-warning">Hide game:</p><input class="btn btn-lg btn-warning mb-4" type="submit" value="True" name="hide_game"/>
+        {% endif %}
+    </form>
+
+    {% if game.image == None %}
+    <div class="container py-3">
+        <form method="POST" class="needs-validation" enctype="multipart/form-data">
+            <div class="col-12 mb-3">
+                <label for="image" class="form-label text-warning">Image<span class="text-muted">(Optional)</span></label>
+                <p><input type="file" id='image' name="file"></p>
+            </div>
+            <input class="btn btn-success btn-md" type="submit" value="Submit">
+        </form>
+    </div>
+    {% endif %}
+
+
     <div class="container py-3 border-bottom">
+        {% if game.image != None %}
         <img class="mb-4" src="{{ url_for('static', filename=game.image) }}" width="450" height="600" alt="image">
+        {% endif %}
         <p class="display-5 fw-bold">{{ game.name }}</p>
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             <p class="fw-light fs-1">${{ game.price }}</p>
