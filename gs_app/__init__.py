@@ -23,3 +23,5 @@ from .views import init_views
 init_views()
 
 from .models import games
+
+# from .clean_database import clean_games

@@ -1,9 +1,11 @@
 import os
+import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
 from gs_app.models.games import Game, GENRES
+# from gs_app.clean_database.clean_games import CleanGame
 
 
 class GameView(FlaskView):
@@ -16,6 +18,8 @@ class GameView(FlaskView):
     @route('/games', endpoint='games', methods=['GET', 'POST'])
     def home(self):
         games = GameService.get_games()
+
+        # CleanGame.clean_game_by_hide()
 
         search = request.args.get('search')
         if search:
@@ -34,9 +38,9 @@ class GameView(FlaskView):
         if request.method == "POST":
 
             if request.form.get('hide_game') == 'True':
-                game.update(hide=True)
+                game.update(hide=True, hide_change_datetime=datetime.datetime.utcnow())
             elif request.form.get('hide_game') == 'False':
-                game.update(hide=False)
+                game.update(hide=False, hide_change_datetime=None)
 
             file = request.files.get('file')
             if file and self.allowed_file(file.filename):
