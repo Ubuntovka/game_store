@@ -1,3 +1,9 @@
+"""
+Game views used to manage games on web application, this module
+defines the following classes:
+- `GameView`, class that defines game views
+"""
+
 import os
 import datetime
 from flask import render_template, request, redirect, url_for, flash
@@ -5,18 +11,35 @@ from flask_classy import FlaskView, route
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
 from gs_app.models.games import Game, GENRES
+
+
 # from gs_app.clean_database.clean_games import CleanGame
 
 
 class GameView(FlaskView):
+    """
+       Game views used to manage games on web application
+    """
+
+    # base url route for all department routes
     route_base = '/'
 
     @classmethod
     def allowed_file(cls, filename):
+        """
+        Method `allowed_file` used to check the file extension.
+        :param filename:str File name.
+        :return: bool, True if file extension valid.
+        """
         return '.' in filename and filename.rsplit('.', 1)[1] in {'png', 'jpg'}
 
     @route('/games', endpoint='games', methods=['GET', 'POST'])
     def home(self):
+        """
+        Returns rendered `games.html` template for url route
+        `/games` and endpoint `games`
+        :return: rendered `games.html` template
+        """
         games = GameService.get_games()
 
         # CleanGame.clean_game_by_hide()
@@ -33,15 +56,22 @@ class GameView(FlaskView):
 
     @route('/game/<game_uuid>', endpoint='game_details', methods=['POST', 'GET'])
     def game_details(self, game_uuid):
+        """
+         Returns rendered `game_details.html` template for url route
+        `/game/<game_uuid>` and endpoint `game_details`
+        :param game_uuid:str game uuid
+        :return: rendered `game_details.html` template
+        """
         game = GameService.get_games_by_uuid(game_uuid)
 
         if request.method == "POST":
-
+            # Get information about the button to hide / open the game
             if request.form.get('hide_game') == 'True':
                 game.update(hide=True, hide_change_datetime=datetime.datetime.utcnow())
             elif request.form.get('hide_game') == 'False':
                 game.update(hide=False, hide_change_datetime=None)
 
+            # Get path to file with image games and add to database
             file = request.files.get('file')
             if file and self.allowed_file(file.filename):
                 filename = secure_filename(file.filename)
@@ -55,6 +85,11 @@ class GameView(FlaskView):
 
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
+        """
+        Returns rendered `add_game.html` template for url route
+        `/game/add`
+        :return: rendered `add_game.html` template
+        """
         if request.method == 'POST':
             name = request.form.get('name')
 
@@ -90,6 +125,12 @@ class GameView(FlaskView):
 
     @route('/game/edit/<game_uuid>', methods=['POST', 'GET'], endpoint='edit_game')
     def edit_game(self, game_uuid):
+        """
+        Returns rendered `edit_game.html` template for url route
+        `/game/edit/<game_uuid>`
+        :param game_uuid:str game uuid
+        :return: rendered `edit_game.html` template
+        """
         game = GameService.get_games_by_uuid(game_uuid)
         if request.method == 'POST':
 
