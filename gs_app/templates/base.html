@@ -14,6 +14,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 
+
 <body style="background-color:Black; color:White;">
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-3 border-bottom">
     <a href="/games" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
@@ -28,9 +29,18 @@
     </ul>
 
     <div class="col-md-3 text-end">
-        <button type="button" style="color:White;" class="btn btn-primary btn-dark me-4">Sign in</button>
+        <a href="/sign_in" type="button" style="color:White;" class="btn btn-primary btn-dark me-4">Sign in</a>
     </div>
 </header>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 
 {% block body %}
 {% endblock %}

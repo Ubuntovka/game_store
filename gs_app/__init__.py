@@ -17,9 +17,13 @@ Subpackages:
 from flask import Flask, render_template
 from flask_mongoengine import MongoEngine
 from flask_restful import Api
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
+app.config.from_envvar('ENV_FILE_LOCATION')
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'game_store',
@@ -34,6 +38,13 @@ db.init_app(app)
 # RESTful API
 api = Api(app)
 
+bcrypt = Bcrypt(app)
+
+jwt = JWTManager(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 from .rest import init_api
 
 init_api()
@@ -42,6 +53,6 @@ from .views import init_views
 
 init_views()
 
-from .models import games
+from .models import game, user
 
 # from .clean_database import clean_games

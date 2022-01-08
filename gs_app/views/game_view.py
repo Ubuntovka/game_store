@@ -8,9 +8,11 @@ import os
 import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
+from flask_jwt_extended import jwt_required
+from flask_login import login_user, login_required, logout_user
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
-from gs_app.models.games import Game, GENRES
+from gs_app.models.game import Game, GENRES
 
 
 # from gs_app.clean_database.clean_games import CleanGame
@@ -83,6 +85,7 @@ class GameView(FlaskView):
 
         return render_template('game_details.html', game=game, game_uuid=game_uuid)
 
+    @login_required
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
         """

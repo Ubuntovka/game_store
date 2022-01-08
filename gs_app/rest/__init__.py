@@ -9,7 +9,7 @@ Functions:
 
 from gs_app import api
 
-from . import game_api
+from . import game_api, user_api
 
 
 def init_api():
@@ -24,4 +24,12 @@ def init_api():
     api.add_resource(
         game_api.GameApi,
         '/api/game/<uuid>'
+    )
+    api.add_resource(
+        user_api.SignupApi,
+        '/api/auth/signup'
+    )
+    api.add_resource(
+        user_api.LoginApi,
+        '/api/auth/login'
     )

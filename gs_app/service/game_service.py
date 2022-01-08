@@ -5,7 +5,7 @@ following classes:
 """
 
 from gs_app import db
-from gs_app.models.games import Game
+from gs_app.models.game import Game
 
 
 class GameService:
