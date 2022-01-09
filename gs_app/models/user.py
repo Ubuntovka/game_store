@@ -1,6 +1,6 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_manager, UserMixin
-from gs_app import db, login_manager
+from gs_app import db, login_manager, jwt
 
 
 class User(db.Document, UserMixin):
@@ -29,4 +29,4 @@ class User(db.Document, UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(_id=user_id)
+    return User.objects.get(id=user_id)

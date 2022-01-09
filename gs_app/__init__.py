@@ -20,10 +20,11 @@ from flask_restful import Api
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
+import datetime
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
 app.config.from_envvar('ENV_FILE_LOCATION')
+app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'game_store',
