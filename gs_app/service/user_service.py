@@ -2,6 +2,12 @@ from gs_app.models.user import User
 
 
 class UserService:
+
+    @staticmethod
+    def get_game_by_email(user_email):
+        user = User.objects(email=user_email).first()
+        return user
+
     @staticmethod
     def add_user(json_data):
         new_user = User(

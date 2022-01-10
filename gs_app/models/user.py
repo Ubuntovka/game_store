@@ -9,6 +9,7 @@ class User(db.Document, UserMixin):
     firstname = db.StringField()
     lastname = db.StringField()
     username = db.StringField()
+    image = db.StringField()
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -23,7 +24,8 @@ class User(db.Document, UserMixin):
             'password': self.password,
             'firstname': self.firstname,
             'lastname': self.lastname,
-            'username': self.username
+            'username': self.username,
+            'image': self.image
         }
 
 

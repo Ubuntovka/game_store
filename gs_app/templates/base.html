@@ -32,7 +32,9 @@
         {% if not current_user.is_authenticated %}
         <a href="/sign_in" type="button" style="color:White;" class="btn btn-primary btn-dark me-4">Sign in</a>
         {% else %}
-        <nobr style="color:White;">{{ current_user.firstname }} {{ current_user.lastname }}</nobr>
+        <img class="mb-4" src="{{ url_for('static', filename=current_user.image) }}" width="45" height="60"
+             alt="image">
+        <a href="/user" type="button" style="color:White;">{{ current_user.firstname }} {{ current_user.lastname }}</a>
         <a href="/logout" type="button" style="color:Red;" class="btn btn-primary btn-dark me-4">Exit</a>
         {% endif %}
     </div>

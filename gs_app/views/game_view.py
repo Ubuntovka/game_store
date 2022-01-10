@@ -168,6 +168,6 @@ class GameView(FlaskView):
                 )
                 return redirect('/game/' + game_uuid)
             except:
-                return 'An error occurred while updating the data.'
+                flash('An error occurred while updating the data.')
 
         return render_template('edit_game.html', game=game, all_genres=GENRES)
