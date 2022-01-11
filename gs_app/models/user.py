@@ -1,5 +1,5 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_login import login_manager, UserMixin, current_user
+from flask_login import UserMixin
 from flask_security import RoleMixin
 from gs_app import db, login_manager, jwt
 

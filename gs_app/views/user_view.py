@@ -21,6 +21,11 @@ class UserView(FlaskView):
 
     @route('sign_in', methods=['GET', 'POST'])
     def sign_in(self):
+        """
+        Returns rendered `sign_in.html` template for url route
+        `/sign_in`
+        :return: rendered `sign_in.html` template
+        """
         if request.method == 'POST':
 
             email = request.form.get('email')
@@ -45,6 +50,11 @@ class UserView(FlaskView):
 
     @route('registration', methods=['GET', 'POST'])
     def registration(self):
+        """
+        Returns rendered `registration.html` template for url route
+        `/registration`
+        :return: rendered `registration.html` template
+        """
         if request.method == 'POST':
             firstname = request.form.get('firstname')
             lastname = request.form.get('lastname')
@@ -72,6 +82,10 @@ class UserView(FlaskView):
     @route('/logout', methods=['GET', 'POST'])
     @login_required
     def logout(self):
+        """
+        Redirect to `/games` after logout user.
+        :return: redirect to `/games`
+        """
         logout_user()
         flash('You were logged out')
         return redirect('/games')
@@ -79,11 +93,21 @@ class UserView(FlaskView):
     @route('/user', methods=['GET', 'POST'])
     @login_required
     def user_info(self):
+        """
+        Returns rendered `user.html` template for url route
+        `/user_info`
+        :return: rendered `user.html` template
+        """
         return render_template('user.html')
 
     @route('/user/edit', methods=['GET', 'POST'])
     @login_required
     def user_edit(self):
+        """
+        Returns rendered `edit_user.html` template for url route
+        `/user/edit`
+        :return: rendered `edit_user.html` template
+        """
         user = UserService.get_game_by_email(current_user.email)
         if request.method == 'POST':
             firstname = request.form.get('firstname')
