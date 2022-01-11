@@ -8,6 +8,9 @@ Game details
 
 <div class="p-5 mb-4 bg-dark rounded-3">
 
+    {% if current_user.is_authenticated %}
+    {% for i in current_user.roles %}
+    {% if i.name == "manager" %}
     <a href="{{ url_for('edit_game', game_uuid=game_uuid) }}" role="button" class="btn btn-lg btn-info mb-4">Edit
         game</a>
 
@@ -16,15 +19,20 @@ Game details
         <p class="text-warning">Unhide game:</p>
         <input class="btn btn-lg btn-warning mb-4" type="submit" value="False" name="hide_game"/>
         {% else %}
-        <p class="text-warning">Hide game:</p><input class="btn btn-lg btn-warning mb-4" type="submit" value="True" name="hide_game"/>
+        <p class="text-warning">Hide game:</p><input class="btn btn-lg btn-warning mb-4" type="submit" value="True"
+                                                     name="hide_game"/>
         {% endif %}
     </form>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
     {% if game.image == None %}
     <div class="container py-3">
         <form method="POST" class="needs-validation" enctype="multipart/form-data">
             <div class="col-12 mb-3">
-                <label for="image" class="form-label text-warning">Image<span class="text-muted">(Optional)</span></label>
+                <label for="image" class="form-label text-warning">Image<span
+                        class="text-muted">(Optional)</span></label>
                 <p><input type="file" id='image' name="file"></p>
             </div>
             <input class="btn btn-success btn-md" type="submit" value="Submit">

@@ -1,6 +1,12 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_login import login_manager, UserMixin
+from flask_login import login_manager, UserMixin, current_user
+from flask_security import RoleMixin
 from gs_app import db, login_manager, jwt
+
+
+class Role(db.Document, RoleMixin):
+    name = db.StringField(unique=True)
+    description = db.StringField()
 
 
 class User(db.Document, UserMixin):
@@ -10,6 +16,8 @@ class User(db.Document, UserMixin):
     lastname = db.StringField()
     username = db.StringField()
     image = db.StringField()
+    active = db.BooleanField(default=True)
+    roles = db.ListField(db.ReferenceField(Role), default=[])
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')

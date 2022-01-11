@@ -9,7 +9,15 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
-    {% block head %}{% endblock %}
+    <style>
+   .round {
+    border-radius: 50%;
+   }
+
+    </style>
+
+    {% block head %}
+    {% endblock %}
 
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -32,8 +40,10 @@
         {% if not current_user.is_authenticated %}
         <a href="/sign_in" type="button" style="color:White;" class="btn btn-primary btn-dark me-4">Sign in</a>
         {% else %}
-        <img class="mb-4" src="{{ url_for('static', filename=current_user.image) }}" width="45" height="60"
-             alt="image">
+        {% if current_user.image %}
+        <img src="{{ url_for('static', filename=current_user.image) }}" alt="image" class="round" height="60"
+             width="60">
+        {% endif %}
         <a href="/user" type="button" style="color:White;">{{ current_user.firstname }} {{ current_user.lastname }}</a>
         <a href="/logout" type="button" style="color:Red;" class="btn btn-primary btn-dark me-4">Exit</a>
         {% endif %}

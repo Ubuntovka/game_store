@@ -21,6 +21,9 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 import datetime
+from flask_principal import Permission, RoleNeed
+from flask_security import MongoEngineUserDatastore, Security
+
 
 app = Flask(__name__)
 app.config.from_envvar('ENV_FILE_LOCATION')
@@ -46,6 +49,10 @@ jwt = JWTManager(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# Create a permission with a single Need, in this case a RoleNeed.
+admin_permission = Permission(RoleNeed('admin'))
+manager_permission = Permission(RoleNeed('manager'))
+
 from .rest import init_api
 
 init_api()
@@ -56,4 +63,10 @@ init_views()
 
 from .models import game, user
 
+# Setup Flask-Security
+user_datastore = MongoEngineUserDatastore(db, user.User, user.Role)
+security = Security(app, user_datastore)
+
+
 # from .clean_database import clean_games
+
