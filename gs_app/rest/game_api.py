@@ -6,7 +6,7 @@ Departments REST API, this module defines the following classes:
 """
 
 from flask_restful import Resource
-from flask import json, jsonify
+from flask_jwt_extended import jwt_required
 
 from gs_app.service.game_service import GameService
 
@@ -51,6 +51,7 @@ class GameApi(GameApiBase):
         game = self.service.get_games_by_uuid(uuid)
         return game.to_dict(), 200
 
+    @jwt_required()
     def delete(self, uuid):
         game = self.service.delete_game_by_uuid(uuid)
         return game

@@ -15,9 +15,6 @@ a:hover {
 }
 
 
-
-
-
 </style>
 {% endblock %}
 
@@ -29,7 +26,13 @@ Home
 {% block body %}
 <div class="album py-5">
     <div class="container">
+        {% if current_user.is_authenticated %}
+        {% for i in current_user.roles %}
+        {% if i.name == "manager" %}
         <a href="/game/add" role="button" class="btn btn-lg btn-success mb-4">Add game</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
 
         <div class="nav col-md-3 mb-4">
             <form method="get" class="nav col-12 col-md-auto mb-2 mb-md-0 me-lg-3">
@@ -43,47 +46,10 @@ Home
         <p class="text-info">Choose genres:<span class="text-muted">(Optional)</span></p>
 
         <form method="post" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2 bg-dark mb-4">
-            <input type="checkbox" id="genre" name="genre" value="Strategy">
-            <label for="genre">Strategy</label><br>
-
-            <input type="checkbox" id="genre1" name="genre" value="Strategy(Rally)">
-            <label for="genre">Strategy(Rally)</label><br>
-
-            <input type="checkbox" id="genre2" name="genre" value="Strategy(Arcade)">
-            <label for="genre">Strategy(Arcade)</label><br>
-
-            <input type="checkbox" id="genre3" name="genre" value="Strategy(Off-road)">
-            <label for="genre">Strategy(Off-road)</label><br>
-
-            <input type="checkbox" id="genre4" name="genre" value="RPG">
-            <label for="genre">RPG</label><br>
-
-            <input type="checkbox" id="genre5" name="genre" value="Sports">
-            <label for="genre">Sports</label><br>
-
-            <input type="checkbox" id="genre6" name="genre" value="Races">
-            <label for="genre">Races</label><br>
-
-            <input type="checkbox" id="genre7" name="genre" value="Action">
-            <label for="genre">Action</label><br>
-
-            <input type="checkbox" id="genre8" name="genre" value="Action(FPS)">
-            <label for="genre">Action(FPS)</label><br>
-
-            <input type="checkbox" id="genre9" name="genre" value="Action(TPS)">
-            <label for="genre">Action(TPS)</label><br>
-
-            <input type="checkbox" id="genre10" name="genre" value="Action(Misc.)">
-            <label for="genre">Action(Misc.)</label><br>
-
-            <input type="checkbox" id="genre11" name="genre" value="Adventure">
-            <label for="genre">Adventure</label><br>
-
-            <input type="checkbox" id="genre12" name="genre" value="Puzzle & Skill">
-            <label for="genre">Puzzle & Skill</label><br>
-
-            <input class="mb-3" type="checkbox" id="genre13" name="genre" value="Other">
-            <label for="genre">Other</label><br>
+            {% for i in all_genres %}
+            <input type="checkbox" id="genre" name="genre" value="{{ i }}">
+            <label for="genre">{{ i }}</label><br>
+            {% endfor %}
             <input class="btn btn-outline-info btn-md mb-4" type="submit" value="Submit">
         </form>
 

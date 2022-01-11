@@ -8,10 +8,11 @@ import os
 import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
+from flask_login import login_required, current_user
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
-from gs_app.models.games import Game, GENRES
-
+from gs_app.models.game import Game, GENRES
+from gs_app import manager_permission
 
 # from gs_app.clean_database.clean_games import CleanGame
 
@@ -52,7 +53,7 @@ class GameView(FlaskView):
         if list_of_genres:
             games = GameService.get_games_by_genres(list_of_genres)
 
-        return render_template('games.html', games=games)
+        return render_template('games.html', games=games, all_genres=GENRES)
 
     @route('/game/<game_uuid>', endpoint='game_details', methods=['POST', 'GET'])
     def game_details(self, game_uuid):
@@ -83,6 +84,8 @@ class GameView(FlaskView):
 
         return render_template('game_details.html', game=game, game_uuid=game_uuid)
 
+    @login_required
+    @manager_permission.require()
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
         """
@@ -123,6 +126,8 @@ class GameView(FlaskView):
                 return 'An error occurred while adding data.'
         return render_template('add_game.html', all_genres=GENRES)
 
+    @login_required
+    @manager_permission.require()
     @route('/game/edit/<game_uuid>', methods=['POST', 'GET'], endpoint='edit_game')
     def edit_game(self, game_uuid):
         """
@@ -165,6 +170,6 @@ class GameView(FlaskView):
                 )
                 return redirect('/game/' + game_uuid)
             except:
-                return 'An error occurred while updating the data.'
+                flash('An error occurred while updating the data.')
 
         return render_template('edit_game.html', game=game, all_genres=GENRES)

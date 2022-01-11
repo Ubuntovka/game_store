@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Edit User
+{% endblock %}
+
+{% block body %}
+<form method="POST" class="needs-validation" enctype="multipart/form-data">
+    <div class="container">
+        <div class="g-3">
+
+            <div class="col-12 mb-3">
+                <label for="image" class="form-label text-info">Image<span class="text-muted">(Optional)</span></label>
+                <p><input type="file" id='image' name="file"></p>
+                <p>
+                    Now:
+                    {% if current_user.image != None %}
+                    <img class="mb-4" src="{{ url_for('static', filename=current_user.image) }}" width="450"
+                         height="600"
+                         alt="image">
+                    {% else %}
+                    Image not found
+                    {% endif %}
+                </p>
+            </div>
+
+
+            <div class="col-sm-6">
+                <label for="firstname" class="form-label text-info">Firstname</label>
+                <input required type="text" class="form-control mb-3" id="firstname" name="firstname"
+                       value="{{ current_user.firstname }}">
+            </div>
+
+            <div class="col-sm-6">
+                <label for="lastname" class="form-label text-info">Lastname</label>
+                <input required type="text" class="form-control mb-3" id="lastname" name="lastname"
+                       value="{{ current_user.lastname }}">
+            </div>
+
+            <div class="col-sm-6">
+                <label for="email" class="form-label text-info">Email</label>
+                <input required type="email" class="form-control mb-3" id="email" name="email"
+                       value="{{ current_user.email }}">
+            </div>
+
+            <div class="col-sm-6">
+                <label for="username" class="form-label text-info">Username</label>
+                <input required type="text" class="form-control mb-3" id="username" name="username"
+                       value="{{ current_user.username }}">
+            </div>
+        </div>
+
+        <input class="btn btn-success btn-md mb-4" type="submit" value="Submit">
+
+    </div>
+</form>
+
+
+{% endblock %}
+
+

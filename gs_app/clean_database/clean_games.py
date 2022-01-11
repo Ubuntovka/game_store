@@ -1,6 +1,6 @@
 import datetime
 
-from gs_app.models.games import Game
+from gs_app.models.game import Game
 
 
 class CleanGame:
