@@ -15,6 +15,7 @@ a:hover {
 }
 
 
+
 </style>
 {% endblock %}
 
@@ -74,8 +75,8 @@ Home
                             {{ j }}
                             {% endfor %}
                         </p>
-                        <h5 class="card-title"><a href="{{ url_for('game_details', game_uuid=i.uuid) }}">{{ i.name
-                            }}</a></h5>
+                        <h5 class="card-title"><a href="{{ url_for('game_details', game_uuid=i.uuid) }}">
+                            {{ i.name }}</a></h5>
                     </div>
                 </div>
             </div>

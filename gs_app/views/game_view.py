@@ -12,7 +12,10 @@ from flask_login import login_required, current_user
 from gs_app.service.game_service import GameService
 from werkzeug.utils import secure_filename
 from gs_app.models.game import Game, GENRES
+from gs_app.models.game_comment import Comment
+from gs_app.service.game_comment_service import CommentService
 from gs_app import manager_permission
+
 
 # from gs_app.clean_database.clean_games import CleanGame
 
@@ -80,9 +83,40 @@ class GameView(FlaskView):
                 image_path = 'games_logo/' + filename
                 game.update(image=image_path)
 
-            return redirect('/game/' + game_uuid)
+            if request.form.get('comment'):
+                new_comment = request.form.get('comment')
+                try:
+                    Comment(
+                        user=current_user,
+                        game=game,
+                        comment=new_comment,
+                        parent_comment_id=None,
+                        time=datetime.datetime.utcnow()
+                    ).save()
+                except:
+                    return 'An error occurred while adding data.'
+                return redirect('/game/' + game_uuid)
 
-        return render_template('game_details.html', game=game, game_uuid=game_uuid)
+        comments = CommentService.get_comments_by_game(game)
+
+        return render_template('game_details.html', game=game, game_uuid=game_uuid, comments=comments)
+
+    @login_required
+    @route('/game/edit_comment/<comment_id>', endpoint='edit_comment', methods=['GET', 'POST'])
+    def edit_comment(self, comment_id):
+        comment = CommentService.get_game_by_id(comment_id)
+
+        if request.method == 'POST':
+            if request.form.get('comment'):
+                new_comment = request.form.get('comment')
+
+                comment.update(
+                    comment=new_comment
+                )
+
+                return redirect('/game/' + comment.game.uuid)
+
+        return render_template('edit_comment.html', comment=comment)
 
     @login_required
     @manager_permission.require()

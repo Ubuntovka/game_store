@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Comment
+{% endblock %}
+
+{% block body %}
+<form method="POST" class="needs-validation" enctype="multipart/form-data">
+    <div class="container">
+        <div class="g-3">
+
+            <div class="mb-3">
+                <label for="comment" class="form-label text-info">Edit comment</label>
+                <textarea required class="form-control mb-3" id="comment"
+                          name="comment">{{ comment.comment }}</textarea>
+            </div>
+        </div>
+        <input class="btn btn-success btn-md mb-4" type="submit" value="Submit">
+
+
+    </div>
+</form>
+{% endblock %}

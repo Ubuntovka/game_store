@@ -23,9 +23,6 @@ Game details
                                                      name="hide_game"/>
         {% endif %}
     </form>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
 
     {% if game.image == None %}
     <div class="container py-3">
@@ -40,6 +37,10 @@ Game details
     </div>
     {% endif %}
 
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
 
     <div class="container py-3 border-bottom">
         {% if game.image != None %}
@@ -52,13 +53,67 @@ Game details
         </div>
 
     </div>
+
     <div class="container-lg py-3">
         {%for i in game.genre%}
         <nobr class="text-info">{{ i }}</nobr>
         {% endfor %}
         <p class="col-md-8 fs-4">{{ game.description }}</p>
+
+
+        {% if current_user.is_authenticated %}
+        <button class="btn btn-warning mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment"
+                aria-expanded="false" aria-controls="collapseComment">
+            Comment
+        </button>
+        <div class="collapse" id="collapseComment">
+            <form method="POST" class="needs-validation">
+                <div class="mb-3">
+                    <label for="comment" class="form-label text-info">New comment</label>
+                    <textarea required class="form-control mb-3" id="comment" placeholder="Comment"
+                              name="comment"></textarea>
+
+                    <input class="btn btn-success btn-md mb-4" type="submit" value="Save">
+                    <button class="btn btn-danger btn-md mb-4" type="reset" data-bs-toggle="collapse"
+                            data-bs-target="#collapseComment" aria-controls="collapseComment">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+
+
     </div>
+
 </div>
+
+<div class="container mt-5">
+
+    {% if comments|length > 0 %}
+    {% for c in comments %}
+    <div class="p-5 rounded-3 bg-dark alert">
+        <h3>{{ c.user.username }}</h3>
+        <p class="lead">{{ c.comment }}</p>
+        <p><b>Date: {{ c.time }}</b></p>
+
+        {% if current_user.is_authenticated %}
+        {% if current_user.username == c.user.username %}
+        <a href="{{ url_for('edit_comment', comment_id=c.pk) }}" role="button" class="btn btn-lg btn-info mb-4">Edit</a>
+
+        {% endif %}
+        {% endif %}
+
+
+    </div>
+    {% endfor %}
+
+
+</div>
+{% else %}
+<p>No comments</p>
+{% endif %}
 
 
 {% endblock %}
+
