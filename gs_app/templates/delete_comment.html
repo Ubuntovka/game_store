@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete comment
+{% endblock %}
+
+{% block body %}
+
+{% if current_user.is_authenticated %}
+<p>
+    The comment was deleted by author.
+</p>
+{% endif %}
+
+{% endblock %}
