@@ -16,8 +16,8 @@ class Comment(db.Document):
         return {
             '_id': str(self.pk),
             'uuid': self.uuid,
-            'user': self.user.username,
-            'game': self.game.name,
+            'user': self.user,
+            'game': self.game,
             'comment': self.comment,
             'parent_comment_id': self.parent_comment_uuid,
             'time': str(self.time)

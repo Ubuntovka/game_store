@@ -185,7 +185,6 @@ class GameView(FlaskView):
                 return 'An error occurred while adding data.'
         return render_template('add_game.html', all_genres=GENRES)
 
-
     @login_required
     @manager_permission.require()
     @route('/game/edit/<game_uuid>', methods=['POST', 'GET'], endpoint='edit_game')

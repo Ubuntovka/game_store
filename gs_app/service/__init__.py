@@ -6,3 +6,4 @@ Modules:
 
 from . import game_service
 from . import user_service
+from . import cart_service

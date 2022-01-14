@@ -6,7 +6,7 @@ Modules:
 
 from gs_app import app
 
-from . import game_view, user_view
+from . import game_view, user_view, cart_view
 
 
 def init_views():
@@ -16,4 +16,5 @@ def init_views():
     """
     game_view.GameView.register(app)
     user_view.UserView.register(app)
+    cart_view.CartView.register(app)
 
