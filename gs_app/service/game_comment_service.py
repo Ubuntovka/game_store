@@ -17,3 +17,8 @@ class CommentService:
     def delete_comment_by_id(comment_id):
         Comment.objects(id=comment_id).delete()
         return '', 204
+
+    @staticmethod
+    def get_comments_by_uuid(comment_uuid):
+        comment = Comment.objects(uuid=comment_uuid).first()
+        return comment

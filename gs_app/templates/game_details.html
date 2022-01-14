@@ -92,20 +92,43 @@ Game details
 
     {% if comments|length > 0 %}
     {% for c in comments %}
+
+    {% if not c.parent_comment_uuid %}
     <div class="p-5 rounded-3 bg-dark alert">
         <h3>{{ c.user.username }}</h3>
         <p class="lead">{{ c.comment }}</p>
         <p><b>Date: {{ c.time }}</b></p>
 
         {% if current_user.is_authenticated %}
-        {% if current_user.username == c.user.username %}
-        <a href="{{ url_for('edit_comment', comment_id=c.pk) }}" role="button" class="btn btn-lg btn-info mb-4">Edit</a>
-        <a href="{{ url_for('delete_comment', comment_id=c.pk) }}" role="button" class="btn btn-lg btn-danger mb-4">Delete</a>
-        {% endif %}
+        <p>
+            <a href="{{ url_for('reply_comment', comment_id=c.pk) }}" class="mb-3" type="button" style="color:Blue;">Reply</a>
+        </p>
         {% endif %}
 
+        {% if current_user.is_authenticated and current_user.username == c.user.username %}
+        <a href="{{ url_for('edit_comment', comment_id=c.pk) }}" type="button" class="btn btn-lg btn-info mb-4">Edit</a>
+        <a href="{{ url_for('delete_comment', comment_id=c.pk) }}" type="button" class="btn btn-lg btn-danger mb-4">Delete</a>
+        {% endif %}
 
     </div>
+    {% endif %}
+
+    <div class="bg-dark">
+        {% for child_c in comments %}
+        {% if child_c.parent_comment_uuid == c.uuid %}
+        <div class="mx-auto bg-dark alert" style="width: 1000px;">
+            <h3>{{ child_c.user.username }}</h3>
+            <p class="lead">{{ child_c.comment }}</p>
+            <p><b>Date: {{ child_c.time }}</b></p>
+            {% if current_user.is_authenticated and current_user.username == c.user.username %}
+            <a href="{{ url_for('delete_comment', comment_id=child_c.pk) }}" type="button" class="btn btn-lg btn-danger mb-4">Delete</a>
+            {% endif %}
+        </div>
+
+        {% endif %}
+        {% endfor %}
+    </div>
+
     {% endfor %}
 
 

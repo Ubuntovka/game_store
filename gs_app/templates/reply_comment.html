@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Game details
+{% endblock %}
+
+{% block body %}
+
+<div class="p-5 rounded-3 bg-dark alert">
+    <h3>{{ parent_comment.user.username }}</h3>
+    <p class="lead">{{ parent_comment.comment }}</p>
+    <p><b>Date: {{ parent_comment.time }}</b></p>
+</div>
+
+<form method="POST" class="needs-validation">
+    <div class="container">
+        <div class="mb-3">
+            <label for="new_comment" class="form-label text-info">Enter a reply to the comment</label>
+            <textarea required class="form-control mb-3" id="new_comment" placeholder="Comment"
+                      name="new_comment"></textarea>
+
+            <input class="btn btn-success btn-md mb-4" type="submit" value="Save">
+            <button class="btn btn-danger btn-md mb-4" type="reset">
+                Cancel
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
