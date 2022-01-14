@@ -119,6 +119,12 @@ class GameView(FlaskView):
         return render_template('edit_comment.html', comment=comment)
 
     @login_required
+    @route('/game/delete_comment/<comment_id>', endpoint='delete_comment', methods=['GET', 'POST'])
+    def delete_comment(self, comment_id):
+        CommentService.delete_comment_by_id(comment_id)
+        return render_template('delete_comment.html')
+
+    @login_required
     @manager_permission.require()
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
@@ -159,6 +165,7 @@ class GameView(FlaskView):
             except:
                 return 'An error occurred while adding data.'
         return render_template('add_game.html', all_genres=GENRES)
+
 
     @login_required
     @manager_permission.require()

@@ -9,6 +9,11 @@ class CommentService:
         return comments
 
     @staticmethod
-    def get_game_by_id(comment_id):
+    def get_comment_by_id(comment_id):
         comment = Comment.objects(id=comment_id).first()
         return comment
+
+    @staticmethod
+    def delete_comment_by_id(comment_id):
+        Comment.objects(id=comment_id).delete()
+        return '', 204
