@@ -18,10 +18,12 @@ class CartView(FlaskView):
     route_base = '/'
 
     @login_required
-    @route('/cart', methods=['POST', 'GET'])
+    @route('/cart', endpoint='cart', methods=['POST', 'GET'])
     def cart(self):
-
-        return None
+        user = current_user
+        cart = CartService.get_list_cart_by_user(user)
+        total = CartService.get_total_cost_by_current_user(user)
+        return render_template('cart.html', cart=cart, total=total)
 
     @login_required
     @route('/cart/add/<game_uuid>', endpoint='add_in_cart', methods=['POST', 'GET'])
@@ -39,3 +41,27 @@ class CartView(FlaskView):
             )
             new_cart.save()
         return render_template('add_in_cart.html', game=GameService.get_games_by_uuid(game_uuid))
+
+    @login_required
+    @route('/cart/delete/<cart_obj_id>', endpoint='cart_delete', methods=['POST', 'GET'])
+    def delete_cart(self, cart_obj_id):
+        CartService.delete_cart_obj_by_cart_id(cart_obj_id)
+        return redirect('/cart')
+
+    @login_required
+    @route('/cart/add_quantity/<cart_obj_id>', endpoint='cart_add_quantity', methods=['POST', 'GET'])
+    def add_quantity(self, cart_obj_id):
+        CartService.add_one_to_quantity(cart_obj_id)
+        return redirect('/cart')
+
+    @login_required
+    @route('/cart/subtract_quantity/<cart_obj_id>', endpoint='cart_subtract_quantity', methods=['POST', 'GET'])
+    def subtract_quantity(self, cart_obj_id):
+        CartService.subtract_one_to_quantity(cart_obj_id)
+        return redirect('/cart')
+
+    # @login_required
+    # @route('/cart/total_quantity')
+    # def total_quantity(self):
+    #     total = CartService.get_total_quantity_by_user(current_user)
+    #     return redirect('/games')
