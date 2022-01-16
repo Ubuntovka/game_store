@@ -1,15 +1,28 @@
+"""
+User model used to represent users, this module defines the
+following classes:
+- `User`, user model
+- `Role`, role model
+"""
+
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask_security import RoleMixin
-from gs_app import db, login_manager, jwt
+from gs_app import db, login_manager
 
 
 class Role(db.Document, RoleMixin):
+    """
+    Model representing role
+    """
     name = db.StringField(unique=True)
     description = db.StringField()
 
 
 class User(db.Document, UserMixin):
+    """
+    Model representing user
+    """
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True, min_length=8)
     firstname = db.StringField()

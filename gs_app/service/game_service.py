@@ -9,7 +9,7 @@ from gs_app.models.game import Game
 
 class GameService:
     """
-        Department service used to make database queries
+        Game service used to make database queries
     """
 
     @staticmethod
@@ -25,7 +25,7 @@ class GameService:
     def get_games_by_uuid(uuid):
         """
         Fetches the game with given UUID from database
-        :param uuid:str uuid of the game
+        :param uuid: uuid of the game
         :return: game with given uuid
         """
         game = Game.objects(uuid=uuid).first()
@@ -35,7 +35,7 @@ class GameService:
     def get_games_by_name(name):
         """
         Fetches the game with given name from database
-        :param name:str name of the game
+        :param name: name of the game
         :return: game with given name
         """
         games = Game.objects(name__icontains=name, hide=False)
@@ -45,7 +45,7 @@ class GameService:
     def get_games_by_genres(genres: list):
         """
         Fetches all games with at least one genre from list genres
-        :param genres:list list with genres of the game
+        :param genres: list with genres of the game
         :return: games with given genres
         """
         games = Game.objects(genre__in=genres, hide=False)
@@ -55,7 +55,7 @@ class GameService:
     def delete_game_by_uuid(uuid):
         """
         Delete game with given uuid from database
-        :param uuid:str uuid of the game
+        :param uuid: uuid of the game
         :return: 204
         """
         Game.objects(uuid=uuid).delete()
@@ -66,7 +66,7 @@ class GameService:
         """
         Fetches the game with given UUID from database.
         Update `hide` parameter to the game
-        :param uuid:str uuid of the game
+        :param uuid: uuid of the game
         :return: game with an updated `hide` parameter
         """
         game = Game.objects(uuid=uuid).first()

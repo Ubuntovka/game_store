@@ -2,6 +2,8 @@
 This package contains modules defining game services:
 Modules:
 - `game_view.py`: defines department views
+- `user_view.py`: defines user views
+- `cart_view.py`: defines cart views
 """
 
 from gs_app import app

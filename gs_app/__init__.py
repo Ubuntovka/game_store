@@ -14,7 +14,7 @@ Subpackages:
 - `tests`: contains modules with unit tests
 """
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_restful import Api
 from flask_bcrypt import Bcrypt

@@ -103,11 +103,3 @@ class CartView(FlaskView):
                 is_order=True
             )
         return redirect('/games')
-
-
-
-# @login_required
-# @route('/cart/total_quantity')
-# def total_quantity(self):
-#     total = CartService.get_total_quantity_by_user(current_user)
-#     return redirect('/games')
