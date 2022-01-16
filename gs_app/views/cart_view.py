@@ -94,6 +94,18 @@ class CartView(FlaskView):
         total = CartService.get_total_cost_by_current_user(current_user)
         return render_template('submit_order.html', cart=cart, total=total)
 
+    @login_required
+    @route('/order/confirm', endpoint='order_confirm', methods=['POST', 'GET'])
+    def confirm_order(self):
+        last_cart = CartService.get_list_cart_by_user(current_user)
+        for i in last_cart:
+            i.update(
+                is_order=True
+            )
+        return redirect('/games')
+
+
+
 # @login_required
 # @route('/cart/total_quantity')
 # def total_quantity(self):

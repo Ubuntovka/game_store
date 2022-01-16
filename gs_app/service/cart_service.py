@@ -5,18 +5,18 @@ class CartService:
 
     @staticmethod
     def get_cart_by_game_and_user(game, user):
-        cart = Cart.objects(game=game, user=user).first()
+        cart = Cart.objects(game=game, user=user, is_order=False).first()
         return cart
 
     @staticmethod
     def get_list_cart_by_user(user):
-        list_cart = Cart.objects(user=user).all()
+        list_cart = Cart.objects(user=user, is_order=False).all()
         return list_cart
 
     @staticmethod
     def get_total_cost_by_current_user(user):
         total = 0.0
-        for i in Cart.objects(user=user).all():
+        for i in Cart.objects(user=user, is_order=False).all():
             total += i.game.price * i.quantity
         return total
 
