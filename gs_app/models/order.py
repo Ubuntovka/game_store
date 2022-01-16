@@ -3,7 +3,7 @@ from .cart import Cart
 
 
 class Order(db.Document):
-    cart = db.ReferenceField(Cart)
+    cart = db.ListField(db.ReferenceField(Cart), required=True)
     first_name = db.StringField(required=True)
     last_name = db.StringField(required=True)
     email = db.EmailField(required=True)

@@ -72,7 +72,7 @@ class CartView(FlaskView):
 
             try:
                 Order(
-                    cart=Cart.objects(user=current_user).first(),
+                    cart=CartService.get_list_cart_by_user(current_user),
                     first_name=first_name,
                     last_name=last_name,
                     email=email,
@@ -83,11 +83,16 @@ class CartView(FlaskView):
             except:
                 return 'An error occurred while adding data.'
             finally:
-                pass
+                return redirect('/order')
 
         return render_template('order.html')
 
-
+    @login_required
+    @route('/order', endpoint='order', methods=['POST', 'GET'])
+    def order(self):
+        cart = CartService.get_list_cart_by_user(current_user)
+        total = CartService.get_total_cost_by_current_user(current_user)
+        return render_template('submit_order.html', cart=cart, total=total)
 
 # @login_required
 # @route('/cart/total_quantity')
