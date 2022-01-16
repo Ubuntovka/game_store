@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order
+{% endblock %}
+
+{% block body %}
+
+<form method="POST" class="needs-validation">
+    <div class="container g-3">
+        <div class="col-sm-4 mb-3">
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" name="firstname">
+        </div>
+
+        <div class="col-sm-4 mb-3">
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastName" name="lastname">
+        </div>
+
+        <div class="col-sm-4 mb-3">
+            <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+            <input required type="email" class="form-control" id="email" placeholder="you@example.com" name="email">
+        </div>
+
+        <div class="col-sm-4 mb-3">
+            <label for="phone" class="form-label">Phone <span class="text-muted"></span></label>
+            <input required class="form-control" id="phone" placeholder="+380_________" name="phone">
+        </div>
+
+        <label for="payment_type" class="form-label">Choose payment type: <span class="text-muted"></span></label>
+        <select id="payment_type" name="payment_type" class="form-select col-sm-4 mb-3" aria-label="payment type">
+            <option value="card">Card</option>
+            <option value="cash">Cash</option>
+        </select>
+
+        <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea class="form-control mb-3" id="comment" placeholder="Comment" name="comment"></textarea>
+        </div>
+
+
+        <button class="w-20 btn btn-primary btn-lg" type="submit">Order</button>
+    </div>
+</form>
+
+{% endblock %}

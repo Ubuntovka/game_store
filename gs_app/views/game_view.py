@@ -102,48 +102,6 @@ class GameView(FlaskView):
         return render_template('game_details.html', game=game, game_uuid=game_uuid, comments=comments)
 
     @login_required
-    @route('/game/edit_comment/<comment_id>', endpoint='edit_comment', methods=['GET', 'POST'])
-    def edit_comment(self, comment_id):
-        comment = CommentService.get_comment_by_id(comment_id)
-
-        if request.method == 'POST':
-            if request.form.get('comment'):
-                new_comment = request.form.get('comment')
-
-                comment.update(
-                    comment=new_comment
-                )
-
-                return redirect('/game/' + comment.game.uuid)
-
-        return render_template('edit_comment.html', comment=comment)
-
-    @login_required
-    @route('/game/reply_comment/<comment_id>', endpoint='reply_comment', methods=['GET', 'POST'])
-    def reply_comment(self, comment_id):
-        parent_comment = CommentService.get_comment_by_id(comment_id)
-        if request.method == 'POST':
-            new_comment = request.form.get('new_comment')
-            try:
-                Comment(
-                    user=current_user,
-                    game=parent_comment.game,
-                    comment=new_comment,
-                    parent_comment_uuid=parent_comment.uuid,
-                    time=datetime.datetime.utcnow()
-                ).save()
-            except:
-                return 'An error occurred while adding data.'
-            return redirect('/game/' + parent_comment.game.uuid)
-        return render_template('reply_comment.html', parent_comment=parent_comment)
-
-    @login_required
-    @route('/game/delete_comment/<comment_id>', endpoint='delete_comment', methods=['GET', 'POST'])
-    def delete_comment(self, comment_id):
-        CommentService.delete_comment_by_id(comment_id)
-        return render_template('delete_comment.html')
-
-    @login_required
     @manager_permission.require()
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
@@ -184,7 +142,6 @@ class GameView(FlaskView):
             except:
                 return 'An error occurred while adding data.'
         return render_template('add_game.html', all_genres=GENRES)
-
 
     @login_required
     @manager_permission.require()
@@ -233,3 +190,63 @@ class GameView(FlaskView):
                 flash('An error occurred while updating the data.')
 
         return render_template('edit_game.html', game=game, all_genres=GENRES)
+
+    @login_required
+    @route('/game/edit_comment/<comment_id>', endpoint='edit_comment', methods=['GET', 'POST'])
+    def edit_comment(self, comment_id):
+        """
+        Returns rendered `edit_comment.html` template for url route
+        `/game/edit_comment/<comment_id>` and endpoint `edit_comment`
+        :param comment_id: comment id
+        :return: rendered `edit_comment.html` template
+        """
+        comment = CommentService.get_comment_by_id(comment_id)
+
+        if request.method == 'POST':
+            if request.form.get('comment'):
+                new_comment = request.form.get('comment')
+
+                comment.update(
+                    comment=new_comment
+                )
+
+                return redirect('/game/' + comment.game.uuid)
+
+        return render_template('edit_comment.html', comment=comment)
+
+    @login_required
+    @route('/game/reply_comment/<comment_id>', endpoint='reply_comment', methods=['GET', 'POST'])
+    def reply_comment(self, comment_id):
+        """
+        Returns rendered `reply_comment.html` template for url route
+        `/game/reply_comment/<comment_id>` and endpoint `reply_comment`
+        :param comment_id: comment id
+        :return: rendered `reply_comment.html` template
+        """
+        parent_comment = CommentService.get_comment_by_id(comment_id)
+        if request.method == 'POST':
+            new_comment = request.form.get('new_comment')
+            try:
+                Comment(
+                    user=current_user,
+                    game=parent_comment.game,
+                    comment=new_comment,
+                    parent_comment_uuid=parent_comment.uuid,
+                    time=datetime.datetime.utcnow()
+                ).save()
+            except:
+                return 'An error occurred while adding data.'
+            return redirect('/game/' + parent_comment.game.uuid)
+        return render_template('reply_comment.html', parent_comment=parent_comment)
+
+    @login_required
+    @route('/game/delete_comment/<comment_id>', endpoint='delete_comment', methods=['GET', 'POST'])
+    def delete_comment(self, comment_id):
+        """
+        Returns rendered `delete_comment.html` template for url route
+        `/game/delete_comment/<comment_id>` and endpoint `delete_comment`
+        :param comment_id: comment id
+        :return: rendered `delete_comment.html` template
+        """
+        CommentService.delete_comment_by_id(comment_id)
+        return render_template('delete_comment.html')

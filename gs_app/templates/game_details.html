@@ -49,7 +49,8 @@ Game details
         <p class="display-5 fw-bold">{{ game.name }}</p>
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             <p class="fw-light fs-1">${{ game.price }}</p>
-            <button type="button" class="btn btn-lg btn-success fs-2">Buy</button>
+            <a href="{{ url_for('add_in_cart', game_uuid=game.uuid) }}" type="button"
+               class="btn btn-lg btn-success fs-2">Buy</a>
         </div>
 
     </div>
@@ -121,7 +122,8 @@ Game details
             <p class="lead">{{ child_c.comment }}</p>
             <p><b>Date: {{ child_c.time }}</b></p>
             {% if current_user.is_authenticated and current_user.username == c.user.username %}
-            <a href="{{ url_for('delete_comment', comment_id=child_c.pk) }}" type="button" class="btn btn-lg btn-danger mb-4">Delete</a>
+            <a href="{{ url_for('delete_comment', comment_id=child_c.pk) }}" type="button"
+               class="btn btn-lg btn-danger mb-4">Delete</a>
             {% endif %}
         </div>
 

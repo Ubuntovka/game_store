@@ -8,6 +8,9 @@ from gs_app.service.user_service import UserService
 
 
 class UserView(FlaskView):
+    """
+    User views used to manage users on web application
+    """
     route_base = '/'
 
     @classmethod
