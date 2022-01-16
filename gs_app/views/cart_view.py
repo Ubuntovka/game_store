@@ -2,10 +2,9 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
 from flask_login import login_required, current_user
 from gs_app.models.cart import Cart
+from gs_app.models.order import Order
 from gs_app.service.game_service import GameService
 from gs_app.service.cart_service import CartService
-from gs_app.models.game import Game, GENRES
-from gs_app.models.game_comment import Comment
 from gs_app import manager_permission
 
 
@@ -60,8 +59,38 @@ class CartView(FlaskView):
         CartService.subtract_one_to_quantity(cart_obj_id)
         return redirect('/cart')
 
-    # @login_required
-    # @route('/cart/total_quantity')
-    # def total_quantity(self):
-    #     total = CartService.get_total_quantity_by_user(current_user)
-    #     return redirect('/games')
+    @login_required
+    @route('/cart/order', endpoint='cart_order', methods=['POST', 'GET'])
+    def cart_order(self):
+        if request.method == 'POST':
+            first_name = request.form.get('firstname')
+            last_name = request.form.get('lastname')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            payment_type = request.form.get('payment_type')
+            comment = request.form.get('comment')
+
+            try:
+                Order(
+                    cart=Cart.objects(user=current_user).first(),
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email,
+                    phone=phone,
+                    payment_type=payment_type,
+                    comment=comment
+                ).save()
+            except:
+                return 'An error occurred while adding data.'
+            finally:
+                pass
+
+        return render_template('order.html')
+
+
+
+# @login_required
+# @route('/cart/total_quantity')
+# def total_quantity(self):
+#     total = CartService.get_total_quantity_by_user(current_user)
+#     return redirect('/games')
