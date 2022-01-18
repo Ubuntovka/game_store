@@ -17,8 +17,8 @@ class UserView(FlaskView):
     def allowed_file(cls, filename):
         """
         Method `allowed_file` used to check the file extension.
-        :param filename:str File name.
-        :return: bool, True if file extension valid.
+        :param filename: File name.
+        :return: True if file extension valid.
         """
         return '.' in filename and filename.rsplit('.', 1)[1] in {'png', 'jpg'}
 
@@ -111,7 +111,7 @@ class UserView(FlaskView):
         `/user/edit`
         :return: rendered `edit_user.html` template
         """
-        user = UserService.get_game_by_email(current_user.email)
+        user = UserService.get_user_by_email(current_user.email)
         if request.method == 'POST':
             firstname = request.form.get('firstname')
             lastname = request.form.get('lastname')

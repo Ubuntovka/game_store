@@ -10,7 +10,8 @@ def populate_database():
         hide=False,
         description='As war rages on throughout the Northern Realms, you take on the greatest contract of your'
                     ' life — tracking down the Child of Prophecy, a living weapon that can alter the shape'
-                    ' of the world.'
+                    ' of the world.',
+        licenses=1000000
     ).save()
     Game(
         name='Cyberpunk 2077',
@@ -20,7 +21,8 @@ def populate_database():
         hide=False,
         description='Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis'
                     ' obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going'
-                    ' after a one-of-a-kind implant that is the key to immortality.'
+                    ' after a one-of-a-kind implant that is the key to immortality.',
+        licenses=1000000
     ).save()
     Game(
         name='Dark Souls 3',
@@ -29,7 +31,8 @@ def populate_database():
         image='games_logo/dark_souls_3.jpg',
         hide=False,
         description='Dark Souls continues to push the boundaries with the latest, ambitious chapter in '
-                    'the critically-acclaimed and genre-defining series. Prepare yourself and Embrace The Darkness!'
+                    'the critically-acclaimed and genre-defining series. Prepare yourself and Embrace The Darkness!',
+        licenses=1000000
     ).save()
 
 

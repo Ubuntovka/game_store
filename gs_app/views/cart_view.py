@@ -13,7 +13,7 @@ class CartView(FlaskView):
     Cart views used to manage carts on web application
     """
 
-    # base url route for all department routes
+    # base url route for all routes
     route_base = '/'
 
     @login_required
@@ -28,17 +28,28 @@ class CartView(FlaskView):
     @route('/cart/add/<game_uuid>', endpoint='add_in_cart', methods=['POST', 'GET'])
     def add_in_cart(self, game_uuid):
         exist_cart = CartService.get_cart_by_game_and_user(GameService.get_games_by_uuid(game_uuid), current_user)
-        if exist_cart:
-            exist_cart.update(
-                quantity=exist_cart.quantity + 1
-            )
+        game = GameService.get_games_by_uuid(game_uuid)
+        if game.licenses > 0:
+            if exist_cart:
+                try:
+                    exist_cart.update(
+                        quantity=exist_cart.quantity + 1,
+                    )
+                except:
+                    flash('This is the maximum quantity of a product that you can order.')
+            else:
+                new_cart = Cart(
+                    game=GameService.get_games_by_uuid(game_uuid),
+                    user=current_user,
+                    quantity=1
+                )
+
+                game.update(
+                    licenses=game.licenses - 1
+                )
+                new_cart.save()
         else:
-            new_cart = Cart(
-                game=GameService.get_games_by_uuid(game_uuid),
-                user=current_user,
-                quantity=1
-            )
-            new_cart.save()
+            flash('Unfortunately, this game is currently out of stock.')
         return render_template('add_in_cart.html', game=GameService.get_games_by_uuid(game_uuid))
 
     @login_required
@@ -50,13 +61,35 @@ class CartView(FlaskView):
     @login_required
     @route('/cart/add_quantity/<cart_obj_id>', endpoint='cart_add_quantity', methods=['POST', 'GET'])
     def add_quantity(self, cart_obj_id):
-        CartService.add_one_to_quantity(cart_obj_id)
+        cart = CartService.get_cart_by_id(cart_obj_id)
+        game = GameService.get_games_by_uuid(cart.game.uuid)
+        if game.licenses > 0:
+            try:
+                CartService.add_one_to_quantity(cart_obj_id)
+            except:
+                flash('This is the maximum quantity of a product that you can order.')
+            game.update(
+                licenses=game.licenses - 1
+            )
+        else:
+            flash('Unfortunately, this game is currently out of stock.')
         return redirect('/cart')
 
     @login_required
     @route('/cart/subtract_quantity/<cart_obj_id>', endpoint='cart_subtract_quantity', methods=['POST', 'GET'])
     def subtract_quantity(self, cart_obj_id):
-        CartService.subtract_one_to_quantity(cart_obj_id)
+        cart = CartService.get_cart_by_id(cart_obj_id)
+        game = GameService.get_games_by_uuid(cart.game.uuid)
+        if game.licenses > 0:
+            if cart.quantity > 1:
+                CartService.subtract_one_to_quantity(cart_obj_id)
+                game.update(
+                    licenses=game.licenses + 1
+                )
+            else:
+                return redirect(url_for('cart_delete', cart_obj_id=cart_obj_id))
+        else:
+            flash('Unfortunately, this game is currently out of stock.')
         return redirect('/cart')
 
     @login_required

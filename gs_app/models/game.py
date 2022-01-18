@@ -24,6 +24,7 @@ class Game(db.Document):
     hide = db.BooleanField()
     description = db.StringField()
     hide_change_datetime = db.DateTimeField()
+    licenses = db.IntField(default=7858772994, max_value=7858772994, min_value=0)
 
     def to_dict(self):
         return {
@@ -35,5 +36,6 @@ class Game(db.Document):
             'image': self.image,
             'hide': self.hide,
             'description': self.description,
-            'hide_change_datetime': str(self.hide_change_datetime)
+            'hide_change_datetime': str(self.hide_change_datetime),
+            'licenses': self.licenses
         }

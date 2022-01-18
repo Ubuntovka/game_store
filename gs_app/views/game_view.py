@@ -14,7 +14,7 @@ from werkzeug.utils import secure_filename
 from gs_app.models.game import Game, GENRES
 from gs_app.models.game_comment import Comment
 from gs_app.service.game_comment_service import CommentService
-from gs_app import manager_permission
+from gs_app import manager_permission, admin_permission, admin_manager_permission
 
 
 # from gs_app.clean_database.clean_games import CleanGame
@@ -25,7 +25,7 @@ class GameView(FlaskView):
        Game views used to manage games on web application
     """
 
-    # base url route for all department routes
+    # base url route for all routes
     route_base = '/'
 
     @classmethod
@@ -101,8 +101,7 @@ class GameView(FlaskView):
 
         return render_template('game_details.html', game=game, game_uuid=game_uuid, comments=comments)
 
-    @login_required
-    @manager_permission.require()
+    @admin_manager_permission.require()
     @route('/game/add', methods=['GET', 'POST'])
     def add_game(self):
         """
@@ -143,8 +142,7 @@ class GameView(FlaskView):
                 return 'An error occurred while adding data.'
         return render_template('add_game.html', all_genres=GENRES)
 
-    @login_required
-    @manager_permission.require()
+    @admin_manager_permission.require()
     @route('/game/edit/<game_uuid>', methods=['POST', 'GET'], endpoint='edit_game')
     def edit_game(self, game_uuid):
         """
@@ -175,6 +173,7 @@ class GameView(FlaskView):
             is_hide = bool(request.form.get('hide'))
 
             description = request.form.get('description')
+            licenses = request.form.get('licenses')
 
             try:
                 game.update(
@@ -183,13 +182,26 @@ class GameView(FlaskView):
                     genre=list_genres,
                     image=image_path,
                     hide=is_hide,
-                    description=description
+                    description=description,
+                    licenses=licenses
                 )
                 return redirect('/game/' + game_uuid)
             except:
                 flash('An error occurred while updating the data.')
 
         return render_template('edit_game.html', game=game, all_genres=GENRES)
+
+    @admin_manager_permission.require()
+    @route('/game/delete/<game_uuid>', endpoint='delete_game', methods=['GET', 'POST'])
+    def delete_game(self, game_uuid):
+        """
+        Returns `games.html` template for url route
+        `/game/delete_game/<game_uuid>` and endpoint `delete_game`
+        :param game_uuid: game uuid
+        :return: /games page
+        """
+        GameService.delete_game_by_uuid(game_uuid)
+        return redirect('/games')
 
     @login_required
     @route('/game/edit_comment/<comment_id>', endpoint='edit_comment', methods=['GET', 'POST'])
@@ -250,3 +262,8 @@ class GameView(FlaskView):
         """
         CommentService.delete_comment_by_id(comment_id)
         return render_template('delete_comment.html')
+
+    # @manager_permission.require()
+    # @route('/game/licenses/edit/<game_uuid>', endpoint='edit_licenses', methods=['GET', 'POST'])
+    # def edit_licenses(self, game_uuid):
+    #     return render_template('')

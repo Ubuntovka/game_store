@@ -10,9 +10,9 @@ from gs_app.models.user import User
 class UserService:
 
     @staticmethod
-    def get_game_by_email(user_email):
+    def get_user_by_email(user_email):
         """
-        Fetches a game with given user email from database
+        Fetches a user with given user email from database
         :param user_email: user email
         :return: user with given user email
         """

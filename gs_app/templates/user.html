@@ -10,6 +10,13 @@
 <div class="p-5 mb-4 bg-dark rounded-3">
     <a href="/user/edit" role="button" class="btn btn-lg btn-info mb-4">Edit user information</a>
 
+    {% if current_user.is_authenticated %}
+    {% for i in current_user.roles %}
+    {% if i.name == "manager" or i.name == "admin" %}
+    <a href="admin/permissions" role="button" class="btn btn-lg btn-info mb-4">Edit users permissions</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
     <div class="container py-3">
         {% if current_user.image != None %}

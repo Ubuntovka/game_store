@@ -10,8 +10,10 @@ Game details
 
     {% if current_user.is_authenticated %}
     {% for i in current_user.roles %}
-    {% if i.name == "manager" %}
+    {% if i.name == "manager" or i.name == "admin" %}
     <a href="{{ url_for('edit_game', game_uuid=game_uuid) }}" role="button" class="btn btn-lg btn-info mb-4">Edit
+        game</a>
+    <a href="{{ url_for('delete_game', game_uuid=game_uuid) }}" role="button" class="btn btn-lg btn-danger mb-4">Delete
         game</a>
 
     <form method="post">
@@ -111,6 +113,12 @@ Game details
         <a href="{{ url_for('delete_comment', comment_id=c.pk) }}" type="button" class="btn btn-lg btn-danger mb-4">Delete</a>
         {% endif %}
 
+        {% for i in current_user.roles %}
+        {% if i.name == "manager" or i.name == "admin"%}
+        <a href="{{ url_for('delete_comment', comment_id=c.pk) }}" type="button" class="btn btn-lg btn-danger mb-4">Delete</a>
+        {% endif %}
+        {% endfor %}
+
     </div>
     {% endif %}
 
@@ -125,6 +133,14 @@ Game details
             <a href="{{ url_for('delete_comment', comment_id=child_c.pk) }}" type="button"
                class="btn btn-lg btn-danger mb-4">Delete</a>
             {% endif %}
+
+            {% for i in current_user.roles %}
+            {% if i.name == "manager" or i.name == "admin"%}
+            <a href="{{ url_for('delete_comment', comment_id=child_c.pk) }}" type="button"
+               class="btn btn-lg btn-danger mb-4">Delete</a>
+            {% endif %}
+            {% endfor %}
+
         </div>
 
         {% endif %}

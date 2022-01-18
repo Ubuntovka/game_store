@@ -52,6 +52,7 @@ login_manager.init_app(app)
 # Create a permission with a single Need, in this case a RoleNeed.
 admin_permission = Permission(RoleNeed('admin'))
 manager_permission = Permission(RoleNeed('manager'))
+admin_manager_permission = Permission(RoleNeed('admin'), RoleNeed('manager'))
 
 from .rest import init_api
 
