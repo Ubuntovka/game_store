@@ -22,3 +22,4 @@ def init_views():
     admin_view.AdminView.register(app)
 
 
+from . import error

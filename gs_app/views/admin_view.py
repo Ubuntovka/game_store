@@ -1,6 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_classy import FlaskView, route
-from flask_login import login_required, current_user
 from gs_app import admin_permission
 from gs_app.service.user_service import UserService
 from gs_app.models.user import User
