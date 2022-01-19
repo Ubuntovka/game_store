@@ -14,4 +14,7 @@ def access_error(error):
 
 @app.errorhandler(500)
 def internal_error(error):
+    # msg = Message('Internal server error: 500', recipients=RECIPIENTS)
+    # msg.body = 'Error 500 in Game'
+    # mail.send(msg)
     return render_template('500.html'), 500

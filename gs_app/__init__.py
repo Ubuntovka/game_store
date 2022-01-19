@@ -14,6 +14,7 @@ Subpackages:
 - `tests`: contains modules with unit tests
 """
 
+import os
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_restful import Api
@@ -23,7 +24,7 @@ from flask_login import LoginManager
 import datetime
 from flask_principal import Permission, RoleNeed
 from flask_security import MongoEngineUserDatastore, Security
-
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config.from_envvar('ENV_FILE_LOCATION')
@@ -35,9 +36,14 @@ app.config['MONGODB_SETTINGS'] = {
     'port': 27017
 }
 
+app.config.from_pyfile('..\config.py')
+
 # database
 db = MongoEngine()
 db.init_app(app)
+
+# mail
+# mail = Mail(app)
 
 # RESTful API
 api = Api(app)
@@ -68,6 +74,4 @@ from .models import game, user
 user_datastore = MongoEngineUserDatastore(db, user.User, user.Role)
 security = Security(app, user_datastore)
 
-
 # from .clean_database import clean_games
-
