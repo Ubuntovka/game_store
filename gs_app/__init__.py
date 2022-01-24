@@ -24,19 +24,16 @@ from flask_login import LoginManager
 import datetime
 from flask_principal import Permission, RoleNeed
 from flask_security import MongoEngineUserDatastore, Security
-from flask_mail import Mail, Message
+from config import DevelopmentConfig
+
+# from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.config.from_envvar('ENV_FILE_LOCATION')
+
+# app.config.from_pyfile('..\config.py')
+app.config.from_object(DevelopmentConfig)
+
 app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
-
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'game_store',
-    'host': 'localhost',
-    'port': 27017
-}
-
-app.config.from_pyfile('..\config.py')
 
 # database
 db = MongoEngine()
