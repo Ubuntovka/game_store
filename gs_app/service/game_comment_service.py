@@ -40,7 +40,7 @@ class CommentService:
         return '', 204
 
     @staticmethod
-    def get_comments_by_uuid(comment_uuid):
+    def get_comment_by_uuid(comment_uuid):
         """
         Fetches a comment with comment uuid from database
         :param comment_uuid: comment uuid

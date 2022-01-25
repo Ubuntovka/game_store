@@ -66,7 +66,8 @@ class GameView(FlaskView):
         :param game_uuid:str game uuid
         :return: rendered `game_details.html` template
         """
-        game = GameService.get_games_by_uuid(game_uuid)
+        game = GameService.get_game_by_uuid(game_uuid)
+        comments = CommentService.get_comments_by_game(game)
 
         if request.method == "POST":
             # Get information about the button to hide / open the game
@@ -96,8 +97,6 @@ class GameView(FlaskView):
                 except:
                     return 'An error occurred while adding data.'
                 return redirect('/game/' + game_uuid)
-
-        comments = CommentService.get_comments_by_game(game)
 
         return render_template('game_details.html', game=game, game_uuid=game_uuid, comments=comments)
 
@@ -151,7 +150,7 @@ class GameView(FlaskView):
         :param game_uuid:str game uuid
         :return: rendered `edit_game.html` template
         """
-        game = GameService.get_games_by_uuid(game_uuid)
+        game = GameService.get_game_by_uuid(game_uuid)
         if request.method == 'POST':
 
             name = request.form.get('name')

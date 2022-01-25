@@ -27,8 +27,8 @@ class CartView(FlaskView):
     @login_required
     @route('/cart/add/<game_uuid>', endpoint='add_in_cart', methods=['POST', 'GET'])
     def add_in_cart(self, game_uuid):
-        exist_cart = CartService.get_cart_by_game_and_user(GameService.get_games_by_uuid(game_uuid), current_user)
-        game = GameService.get_games_by_uuid(game_uuid)
+        exist_cart = CartService.get_cart_by_game_and_user(GameService.get_game_by_uuid(game_uuid), current_user)
+        game = GameService.get_game_by_uuid(game_uuid)
         if game.licenses > 0:
             if exist_cart:
                 try:
@@ -39,7 +39,7 @@ class CartView(FlaskView):
                     flash('This is the maximum quantity of a product that you can order.')
             else:
                 new_cart = Cart(
-                    game=GameService.get_games_by_uuid(game_uuid),
+                    game=GameService.get_game_by_uuid(game_uuid),
                     user=current_user,
                     quantity=1
                 )
@@ -50,7 +50,7 @@ class CartView(FlaskView):
                 new_cart.save()
         else:
             flash('Unfortunately, this game is currently out of stock.')
-        return render_template('add_in_cart.html', game=GameService.get_games_by_uuid(game_uuid))
+        return render_template('add_in_cart.html', game=GameService.get_game_by_uuid(game_uuid))
 
     @login_required
     @route('/cart/delete/<cart_obj_id>', endpoint='cart_delete', methods=['POST', 'GET'])
@@ -62,7 +62,7 @@ class CartView(FlaskView):
     @route('/cart/add_quantity/<cart_obj_id>', endpoint='cart_add_quantity', methods=['POST', 'GET'])
     def add_quantity(self, cart_obj_id):
         cart = CartService.get_cart_by_id(cart_obj_id)
-        game = GameService.get_games_by_uuid(cart.game.uuid)
+        game = GameService.get_game_by_uuid(cart.game.uuid)
         if game.licenses > 0:
             try:
                 CartService.add_one_to_quantity(cart_obj_id)
@@ -79,7 +79,7 @@ class CartView(FlaskView):
     @route('/cart/subtract_quantity/<cart_obj_id>', endpoint='cart_subtract_quantity', methods=['POST', 'GET'])
     def subtract_quantity(self, cart_obj_id):
         cart = CartService.get_cart_by_id(cart_obj_id)
-        game = GameService.get_games_by_uuid(cart.game.uuid)
+        game = GameService.get_game_by_uuid(cart.game.uuid)
         if game.licenses > 0:
             if cart.quantity > 1:
                 CartService.subtract_one_to_quantity(cart_obj_id)

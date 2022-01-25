@@ -8,6 +8,7 @@ class TestCaseBase(unittest.TestCase):
         disconnect()
         connect('test_game_store', alias='default')
         app.config['TESTING'] = True
+        app.config['CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
 
         self.client = app.test_client()

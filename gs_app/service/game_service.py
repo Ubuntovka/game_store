@@ -22,7 +22,7 @@ class GameService:
         return games
 
     @staticmethod
-    def get_games_by_uuid(uuid):
+    def get_game_by_uuid(uuid):
         """
         Fetches the game with given UUID from database
         :param uuid: uuid of the game
@@ -36,7 +36,7 @@ class GameService:
         """
         Fetches the game with given name from database
         :param name: name of the game
-        :return: game with given name
+        :return: games with given name
         """
         games = Game.objects(name__icontains=name, hide=False)
         return games
