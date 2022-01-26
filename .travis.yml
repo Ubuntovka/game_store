@@ -2,8 +2,6 @@ language: python
 python:
   - "3.9"
   - "3.10"
-os:
-  - "windows"
 services: mongodb
 # command to install dependencies
 install:
