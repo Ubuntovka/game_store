@@ -29,7 +29,6 @@ from config import DevelopmentConfig
 
 app = Flask(__name__)
 
-# app.config.from_pyfile('..\config.py')
 app.config.from_object(DevelopmentConfig)
 
 app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
