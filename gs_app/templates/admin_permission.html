@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Permissions
+{% endblock %}
+
+{% block body %}
+<div class="album py-5">
+    <div class="container">
+
+        <div class="nav col-md-3 mb-4">
+            <form method="get" class="nav col-12 col-md-auto mb-2 mb-md-0 me-lg-3">
+                <nobr>
+                    <input type="search" class="form-control form-control-dark" placeholder="Search" name="search">
+                </nobr>
+                <input class="btn btn-outline-success" type="submit" value="Submit">
+            </form>
+        </div>
+
+        {% if user %}
+        <p class="display-5 fw-bold">{{ user.firstname }} </p>
+        <p class="display-5 fw-bold">{{ user.lastname }}</p>
+        <p class="display-6">{{ user.email }}</p>
+        <p class="display-6">{{ user.username }}</p>
+
+
+        {% if not user.roles %}
+        <a href='/admin/to_manager/{{ user.pk }}' role="button" class="btn btn-lg btn-info mb-4">Make it a manager.</a>
+        {% endif %}
+
+        {% for i in user.roles %}
+        {% if i.name != "manager"%}
+        <a href='/admin/to_manager/{{ user.pk }}' role="button" class="btn btn-lg btn-info mb-4">Make it a manager.</a>
+        {% else %}
+        <a href="/admin/to_user/{{ user.pk }}" role="button" class="btn btn-lg btn-danger mb-4">Revoke the rights of the manager.</a>
+        {% endif %}
+        {% endfor %}
+
+        {% endif %}
+
+
+    </div>
+</div>
+
+
+{% endblock %}

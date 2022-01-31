@@ -29,7 +29,7 @@ Home
     <div class="container">
         {% if current_user.is_authenticated %}
         {% for i in current_user.roles %}
-        {% if i.name == "manager" %}
+        {% if i.name == "manager" or i.name == "admin" %}
         <a href="/game/add" role="button" class="btn btn-lg btn-success mb-4">Add game</a>
         {% endif %}
         {% endfor %}

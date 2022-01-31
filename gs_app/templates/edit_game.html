@@ -63,6 +63,13 @@ Edit Game
                 <textarea required class="form-control mb-3" id="description" placeholder="description"
                           name="description">{{ game.description }}</textarea>
             </div>
+
+            <div class="col-sm-1">
+                <label for="licenses" class="form-label text-info">licenses</label>
+                <input type="number" class="form-control mb-3" id="licenses" placeholder="licenses" name="licenses"
+                       value="{{ game.licenses }}">
+            </div>
+
         </div>
         <input class="btn btn-success btn-md mb-4" type="submit" value="Submit">
     </div>

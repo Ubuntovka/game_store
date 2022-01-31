@@ -14,6 +14,7 @@
     border-radius: 50%;
    }
 
+
     </style>
 
     {% block head %}
@@ -41,14 +42,21 @@
         <a href="/sign_in" type="button" style="color:White;" class="btn btn-primary btn-dark me-4">Sign in</a>
         {% else %}
         <a href="/cart">
-        <img src="/static/cart.jpg" alt="image" class="round" height="50" width="60">
+            <img src="/static/cart.jpg" alt="image" class="round" height="50" width="60">
         </a>
-<!--        <a href="/cart/total_quantity">Click</a>-->
+        <!--        <a href="/cart/total_quantity">Click</a>-->
         {% if current_user.image %}
         <img src="{{ url_for('static', filename=current_user.image) }}" alt="image" class="round" height="60"
              width="60">
         {% endif %}
         <a href="/user" type="button" style="color:White;">{{ current_user.firstname }} {{ current_user.lastname }}</a>
+
+        {% for i in current_user.roles %}
+        {% if i.name == "manager" or i.name == "admin"%}
+        <nobr style="color:White;">{{ current_user.username }}</nobr>
+        {% endif %}
+        {% endfor %}
+
         <a href="/logout" type="button" style="color:Red;" class="btn btn-primary btn-dark me-4">Exit</a>
         {% endif %}
     </div>

@@ -24,6 +24,11 @@ class CartService:
         return cart
 
     @staticmethod
+    def get_cart_by_id(cart_id):
+        cart = Cart.objects(id=cart_id).first()
+        return cart
+
+    @staticmethod
     def get_list_cart_by_user(user):
         """
         Fetches all carts with given user from database

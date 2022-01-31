@@ -15,7 +15,7 @@ class Cart(db.Document):
     """
     game = db.ReferenceField(Game)
     user = db.ReferenceField(User)
-    quantity = db.IntField()
+    quantity = db.IntField(max_value=1001, min_value=1)
     is_order = db.BooleanField(default=False)
 
     def to_dict(self):

@@ -48,7 +48,7 @@ class GameApi(GameApiBase):
         :return: a tuple of the department with given uuid in JSON and a status
         code 200
         """
-        game = self.service.get_games_by_uuid(uuid)
+        game = self.service.get_game_by_uuid(uuid)
         return game.to_dict(), 200
 
     @jwt_required()

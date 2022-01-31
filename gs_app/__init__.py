@@ -23,21 +23,22 @@ from flask_login import LoginManager
 import datetime
 from flask_principal import Permission, RoleNeed
 from flask_security import MongoEngineUserDatastore, Security
+from config import DevelopmentConfig
 
+# from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.config.from_envvar('ENV_FILE_LOCATION')
-app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'game_store',
-    'host': 'localhost',
-    'port': 27017
-}
+app.config.from_object(DevelopmentConfig)
+
+app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
 
 # database
 db = MongoEngine()
 db.init_app(app)
+
+# mail
+# mail = Mail(app)
 
 # RESTful API
 api = Api(app)
@@ -52,6 +53,7 @@ login_manager.init_app(app)
 # Create a permission with a single Need, in this case a RoleNeed.
 admin_permission = Permission(RoleNeed('admin'))
 manager_permission = Permission(RoleNeed('manager'))
+admin_manager_permission = Permission(RoleNeed('admin'), RoleNeed('manager'))
 
 from .rest import init_api
 
@@ -67,6 +69,4 @@ from .models import game, user
 user_datastore = MongoEngineUserDatastore(db, user.User, user.Role)
 security = Security(app, user_datastore)
 
-
 # from .clean_database import clean_games
-
