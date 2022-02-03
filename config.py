@@ -17,15 +17,8 @@ class DevelopmentConfig(Config):
     MONGODB_HOST = os.environ.get('MONGODB_HOST')
     MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
 
-
-class TestingConfig(Config):
-    PSWRD_DB_SERVER = os.environ.get('PSWRD_DB_SERVER')
-    MONGODB_DB_TEST = os.environ.get('MONGODB_DB_TEST')
-    MONGODB_HOST_TEST = os.environ.get('MONGODB_HOST_TEST')
-    MONGODB_PORT_TEST = int(os.environ.get('MONGODB_PORT_TEST'))
-
-
-app_configs = {
-    'DEV': DevelopmentConfig,
-    'TEST': TestingConfig
-}
+# class TestingConfig(Config):
+#     PSWRD_DB_SERVER = os.environ.get('PSWRD_DB_SERVER')
+#     MONGODB_DB_TEST = os.environ.get('MONGODB_DB_TEST')
+#     MONGODB_HOST_TEST = os.environ.get('MONGODB_HOST_TEST')
+#     MONGODB_PORT_TEST = int(os.environ.get('MONGODB_PORT_TEST'))
