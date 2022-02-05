@@ -22,7 +22,7 @@ class UserView(FlaskView):
         """
         return '.' in filename and filename.rsplit('.', 1)[1] in {'png', 'jpg'}
 
-    @route('sign_in', methods=['GET', 'POST'])
+    @route('/sign_in', methods=['GET', 'POST'])
     def sign_in(self):
         """
         Returns rendered `sign_in.html` template for url route
@@ -51,7 +51,7 @@ class UserView(FlaskView):
 
         return render_template('sign_in.html')
 
-    @route('registration', methods=['GET', 'POST'])
+    @route('/registration', methods=['GET', 'POST'])
     def registration(self):
         """
         Returns rendered `registration.html` template for url route
