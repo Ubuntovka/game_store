@@ -16,4 +16,7 @@ class DevelopmentConfig(Config):
     MONGODB_DB = os.environ.get('MONGODB_DB')
     MONGODB_HOST = os.environ.get('MONGODB_HOST')
     MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
+
+
+class ProductionConfig(Config):
     MONGODB_URI = os.environ.get('MONGODB_URI')
