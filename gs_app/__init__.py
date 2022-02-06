@@ -37,11 +37,12 @@ app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
 db = MongoEngine()
 db.init_app(app)
 
-# mail
-# mail = Mail(app)
 
 # RESTful API
 api = Api(app)
+
+# uri
+uri = DevelopmentConfig.MONGODB_URI
 
 bcrypt = Bcrypt(app)
 
