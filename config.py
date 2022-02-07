@@ -10,7 +10,7 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    ENV = "development"  # be default production
+    FLASK_ENV = "development"  # be default production
     DEBUG = True
     PSWRD_DB_SERVER = os.environ.get('PSWRD_DB_SERVER')
     MONGODB_DB = os.environ.get('MONGODB_DB')
@@ -19,4 +19,5 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    MONGODB_URI = os.environ.get('MONGODB_URI')
+    MONGODB_DB = os.environ.get('MONGODB_DB')
+    MONGODB_HOST = os.environ.get('MONGODB_URI')
