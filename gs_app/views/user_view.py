@@ -121,7 +121,7 @@ class UserView(FlaskView):
             file = request.files.get('file')
             if file and self.allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                file.save(os.path.join('D:/epam_tasks/game_store/gs_app/static/user_images', filename))
+                file.save(os.path.join('game_store/gs_app/static/user_images', filename))
                 image_path = 'user_images/' + filename
             else:
                 image_path = user.image
