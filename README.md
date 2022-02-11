@@ -1,4 +1,5 @@
 # Game Store
+## https://game-store-lab.herokuapp.com/games
 
 ## With this app you can:
 ### As a guest:
