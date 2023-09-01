@@ -24,20 +24,20 @@ import datetime
 import pymongo
 from flask_principal import Permission, RoleNeed
 from flask_security import MongoEngineUserDatastore, Security
-from config import ProductionConfig
+from config import ProductionConfig, DevelopmentConfig
 
 # from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
 app.config.from_object(ProductionConfig)
+# app.config.from_pyfile('the-config.cfg')
 
 app.config['REMEMBER_COOKIE_DURATION'] = datetime.timedelta(days=7)
 
 # database
-db = MongoEngine()
-db.init_app(app)
-
+db = MongoEngine(app)
+# db.init_app(app)
 # RESTful API
 api = Api(app)
 
