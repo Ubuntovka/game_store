@@ -1,22 +1,29 @@
 """
 Transform data from csv to parquet using Spark.
 """
-import pyspark
+import os
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
-from pyspark.sql.types import IntegerType, StringType, StructType, DoubleType, BooleanType
+from pyspark.sql.types import IntegerType, StringType, StructType, DoubleType
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
+MONGODB_URI = os.environ.get('MONGODB_URI')
+SOURCE_GAMES = os.environ.get('SOURCE_GAMES')
 
 
 class TransformationFromCSVtoParquet:
 
     def __init__(self, csv_file_path):
+
         self.csv_file_path = csv_file_path
 
-        self.__spark = SparkSession.builder.master("local[1]") \
+        self.__spark = SparkSession.builder \
             .appName('FromCSVtoParquet') \
-            .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/test/c") \
-            .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/test/c") \
+            .config("spark.executor.memory", "1g") \
+            .config("spark.mongodb.write.connection.uri", MONGODB_URI) \
+            .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector:10.0.3") \
             .getOrCreate()
         self.__df = None
 
@@ -57,10 +64,13 @@ class TransformationFromCSVtoParquet:
     def load_to_db(self):
         self.__df.write \
             .format("mongodb") \
-            .mode("overwrite").save()
+            .option('database', "Game") \
+            .option('collection', "Game") \
+            .mode("append") \
+            .save()
 
 
-a = TransformationFromCSVtoParquet("../appstore_games.csv")
+a = TransformationFromCSVtoParquet(SOURCE_GAMES)
 a.read_csv()
 a.transformation()
 a.load_to_db()
